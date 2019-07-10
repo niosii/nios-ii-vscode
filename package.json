@@ -1,0 +1,34 @@
+{
+  "name": "nios-ii",
+  "displayName": "Nios II",
+  "description": "Nios II Language Support for Nois II Assembly Language Programming",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.36.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "niosii",
+        "aliases": [
+          "Nios II",
+          "niosii"
+        ],
+        "extensions": [
+          ".s"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "niosii",
+        "scopeName": "main.s",
+        "path": "./syntaxes/niosii.tmLanguage.json"
+      }
+    ]
+  }
+}
