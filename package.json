@@ -3,10 +3,16 @@
   "displayName": "Nios II",
   "description": "Nios II Language Support for Nois II Assembly Language Programming",
   "publisher": "niosii",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": "https://github.com/estKey/nios-ii",
   "engines": {
     "vscode": "^1.36.0"
+  },
+  "scripts": {
+    "build": "vsce package"
+  },
+  "dependencies": {
+    "vsce": "1.64.0"
   },
   "categories": [
     "Programming Languages"
@@ -32,7 +38,7 @@
       {
         "language": "niosii",
         "scopeName": "source.s",
-        "path": "./syntaxes/niosii.tmLanguage.json"
+        "path": "./syntaxes/niosii.assembly.tmLanguage.json"
       }
     ]
   }

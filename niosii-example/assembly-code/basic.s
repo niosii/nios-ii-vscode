@@ -22,7 +22,7 @@ _end:	br 	_end
 .section Variables					      # variables declaration sections
 .data
 .org	DATA_RAM_LOC
-BYTE:           .BYTE   0x1
+BYTE:           .byte   0x1
 WORD:           .word   1
 STRING:         .asciz  "String"
 EMPTY:          .skip

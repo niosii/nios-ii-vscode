@@ -10,5 +10,12 @@
   // symbols that are auto closed when typing
   "autoClosingPairs": [["{", "}"], ["[", "]"], ["(", ")"], ["\"", "\""], ["'", "'"]],
   // symbols that that can be used to surround a selection
-  "surroundingPairs": [["{", "}"], ["[", "]"], ["(", ")"], ["\"", "\""], ["'", "'"]]
+  "surroundingPairs": [["{", "}"], ["[", "]"], ["(", ")"], ["\"", "\""], ["'", "'"]],
+  "folding": {
+    "offSide": true,
+    "markers": {
+      "start": "^\\s*//#region",
+      "end": "^\\s*//#endregion"
+    }
+  }
 }

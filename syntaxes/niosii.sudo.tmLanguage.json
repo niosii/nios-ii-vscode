@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Nios II",
+
+  "fileTypes": [".niosii"],
+  "scopeName": "source.niosii",
+  "patterns": [
+    { "include": "#keywords" },
+    { "include": "#strings" },
+    { "include": "#storage" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "keywords": {
+      "begin": ".text",
+      "end": ".end",
+      "patterns": [
+        {
+          "name": "keyword.control.niosii",
+          "match": "\\b(if|elif|else|for|while|ret)\\b"
+        }
+      ]
+    },
+    "strings": {
+      "name": "string.quoted.double.niosii",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.niosii",
+          "match": "\\\\."
+        }
+      ]
+    },
+    "operators": {
+      "begin": "",
+      "end": "",
+      "patterns": [
+        {
+          "name": "keyword.operator.assignment.systemverilog",
+          "match": "<-|(signed)|(unsigned)"
+        },
+        {
+          "name": "keyword.operator.bitwise.systemverilog",
+          "match": "\\^|\\~|&|\\||\\:|<<|>>"
+        }
+      ]
+    }
+  }
+}
