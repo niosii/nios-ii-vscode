@@ -20,7 +20,10 @@
           "niosii"
         ],
         "extensions": [
-          ".s"
+          ".s",
+          ".niosii",
+          ".eds",
+          ".elf"
         ],
         "configuration": "./language-configuration.json"
       }
@@ -28,7 +31,7 @@
     "grammars": [
       {
         "language": "niosii",
-        "scopeName": "main.s",
+        "scopeName": "source.s",
         "path": "./syntaxes/niosii.tmLanguage.json"
       }
     ]

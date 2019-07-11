@@ -11,7 +11,13 @@
   ],
   "repository": {
     "keywords": {
+      "begin": ".text",
+      "end": ".end",
       "patterns": [
+        {
+          "name": "keyword.control.niosii",
+          "match": "\\b(if|while|for|return)\\b"
+        },
         {
           "name": "keyword.control.niosii",
           "match": "\\b(if|while|for|return)\\b"
@@ -28,7 +34,8 @@
           "match": "\\\\."
         }
       ]
-    }
+    },
+    "": {}
   },
-  "scopeName": "main.s"
+  "scopeName": "source.s"
 }
