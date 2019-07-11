@@ -23,7 +23,7 @@
           "match": "\\b(br|break|call|callr|ret)\\b"
         },
         {
-          "name": "keyword.operator.assignment.niosii",
+          "name": "keyword.annonatie.niosii",
           "match": "(\\.text|\\.end|\\.section|\\.data|\\.equ|\\.org|\\.global)"
         },
         {
@@ -37,10 +37,41 @@
       ]
     },
     "meta": {
+      "name": "meta.label.niosii",
       "patterns": [
         {
           "name": "meta.label.global.niosii",
           "match": "^[a-zA-Z_]([a-zA-Z0-9_]*|[a-zA-Z0-9_\\.%\\$]*[a-zA-Z0-9_])(?=$|[ \t:])"
+        },
+        {
+          "name": "meta.label.tag.niosii",
+          "match": "(.section).*"
+        }
+      ]
+    },
+    "comment": {
+      "name": "comment.niosii",
+      "patterns": [
+        {
+          "name": "comment.line.niosii",
+          "match": "#[^\n]*\n",
+          "patterns": [{ "include": "#FIXME-TODO-XXX" }]
+        },
+        {
+          "name": "comment.block.documentation.niosii",
+          "match": "#\\*[^\n]*\n"
+        },
+        {
+          "name": "comment.block.niosii",
+          "begin": "\\/\\*",
+          "end": "\\*\\/",
+          "patterns": [
+            {
+              "name": "comment.block.niosii",
+              "match": "\\/\\*\\*\\/"
+            },
+            { "include": "#FIXME-TODO-XXX" }
+          ]
         }
       ]
     },
@@ -69,7 +100,7 @@
       "patterns": [
         {
           "name": "constant.numeric.hex.niosii",
-          "match": "(?<![a-zA-Z])\\$[0-9A-Fa-f]+\\b"
+          "match": "(?<![a-zA-Z])0x[0-9A-Fa-f]+\\b"
         },
         {
           "name": "constant.numeric.octal.niosii",
@@ -122,37 +153,17 @@
         }
       ]
     },
-    "comment": {
-      "name": "comment.niosii",
+    "FIXME-TODO-XXX": {
       "patterns": [
         {
-          "name": "comment.line.niosii",
-          "match": "#[^\n]*\n",
-          "patterns": [{ "include": "#FIXME-TODO-XXX" }]
+          "name": "invalid.other.fixmes.niosii",
+          "match": "(?i:fixme)"
         },
         {
-          "name": "comment.block.documentation.niosii",
-          "match": "#\\*[^\n]*\n"
-        },
-        {
-          "name": "comment.block.niosii",
-          "begin": "\\/\\*",
-          "end": "\\*\\/",
-          "patterns": [{ "include": "#FIXME-TODO-XXX" }]
+          "name": "keyword.other.fixmes.niosii",
+          "match": "(?i:todo|xxx)"
         }
       ]
     }
-  },
-  "FIXME-TODO-XXX": {
-    "patterns": [
-      {
-        "name": "invalid.other.fixmes.niosii",
-        "match": "(?i:fixme)"
-      },
-      {
-        "name": "keyword.other.fixmes.niosii",
-        "match": "(?i:todo|xxx)"
-      }
-    ]
   }
 }
