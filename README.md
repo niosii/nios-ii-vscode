@@ -1,65 +1,38 @@
-# nios-ii README
+# **Nios II - Language Support**
 
-Nios II Assembly Programming Language Support for VSCode
+Nios II Assembly Programming Language Support for VSCode.<br>
+This Extension Provides Basic Syntax Highlight, Snippets for Nios II Assembly, and plans to support intelliSense, and sudocode precompile.
 
-## Features
+- If you find a bug, or would like a feature, Please add it as an [Issue](https://github.com/niosii/nios-ii-vscode/issues) or a [Pull-Request](https://github.com/niosii/nios-ii-vscode/pulls)
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## **Features**
 
-For example if there is an image subfolder under your extension project workspace:
+- Elaborate Syntax Highlighting
 
-\!\[feature X\]\(images/feature-x.png\)
+Majorly for education use.<br>
+[Images coming soon]
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## **Requirements**
 
-## Requirements
+- Has Visual Studio Code installed :)
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## **Extension Settings**
 
-## Extension Settings
+- `niosii.enable`: enable/disable this extension
+- `niosii.thing`: set to `blah` to do something
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+## **Known Issues**
 
-For example:
+> Nothing yet
 
-This extension contributes the following settings:
+## **Release Notes**
 
-- `myExtension.enable`: enable/disable this extension
-- `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+> There is No Release yet
 
 ---
 
-## Working with Markdown
+## **Contribute**
 
-**Note:** You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+> In Progress
 
-- Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-- Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-- Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-- [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-- [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+If you wants to contribute to this project, please [fork](https://github.com/niosii/nios-ii-vscode/fork) this branch and create a pull request for it.

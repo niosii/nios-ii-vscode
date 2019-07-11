@@ -1,4 +1,9 @@
 .vscode/**
 .vscode-test/**
+**/.git
 .gitignore
-vsc-extension-quickstart.md
+tsconfig.json
+tslint.json
+node_modules/**
+niosii-examples/**
+test/**
