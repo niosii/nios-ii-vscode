@@ -78,5 +78,150 @@
     "prefix": ".string",
     "description": "Snippet for a string",
     "body": ["${1:var}:\t\t.asciz\t\t\"${2:value}\"\n"]
+  },
+  ".routine": {
+    "prefix": ".routine",
+    "description": "Snippet for a routine",
+    "body": ["${1:routine}:", "\t\t${2:code}", ""]
+  },
+  "add": {
+    "prefix": "add",
+    "description": "Snippet for a add",
+    "body": ["add\t\t${1:target},\t\t${2:register},\t\t${2:register}\n"]
+  },
+  "addi": {
+    "prefix": "addi",
+    "description": "Snippet for a addi",
+    "body": ["addi\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "andhi": {
+    "prefix": "andhi",
+    "description": "Snippet for a andhi",
+    "body": ["andhi\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "and": {
+    "prefix": "and",
+    "description": "Snippet for a and",
+    "body": ["and\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "andi": {
+    "prefix": "andi",
+    "description": "Snippet for a andi",
+    "body": ["andi\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "beq": {
+    "prefix": "beq",
+    "description": "Snippet for a beq",
+    "body": ["beq\t\t${1:register},\t\t${2:register},\t\t${3:label}\n"]
+  },
+  "bge": {
+    "prefix": "bge",
+    "description": "Snippet for a bge",
+    "body": ["bge\t\t${1:register},\t\t${2:register},\t\t${3:label}\n"]
+  },
+  "bgeu": {
+    "prefix": "bgeu",
+    "description": "Snippet for a bgeu",
+    "body": ["bgeu\t\t${1:register},\t\t${2:register},\t\t${3:label}\n"]
+  },
+  "bleu": {
+    "prefix": "bleu",
+    "description": "Snippet for a bleu",
+    "body": ["bleu\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "blt": {
+    "prefix": "blt",
+    "description": "Snippet for a blt",
+    "body": ["blt\t\t${1:register},\t\t${2:register},\t\t${3:label}\n"]
+  },
+  "bltu": {
+    "prefix": "bltu",
+    "description": "Snippet for a bltu",
+    "body": ["bltu\t\t${1:register},\t\t${2:register},\t\t${3:label}\n"]
+  },
+  "bne": {
+    "prefix": "bne",
+    "description": "Snippet for a bne",
+    "body": ["bne\t\t${1:register},\t\t${2:register},\t\t${3:label}\n"]
+  },
+  "br": {
+    "prefix": "br",
+    "description": "Snippet for a br",
+    "body": ["br\t\t${1:label}\n"]
+  },
+  "bret": {
+    "prefix": "bret",
+    "description": "Snippet for a bret",
+    "body": ["bret\n"]
+  },
+  "break": {
+    "prefix": "break",
+    "description": "Snippet for a break",
+    "body": ["break\n"]
+  },
+  "call": {
+    "prefix": "call",
+    "description": "Snippet for a call",
+    "body": ["call\t\t${1:label}\n"]
+  },
+  "callr": {
+    "prefix": "callr",
+    "description": "Snippet for a callr",
+    "body": ["callr\t\t${1:register}\n"]
+  },
+  "cmpeq": {
+    "prefix": "cmpeq",
+    "description": "Snippet for a cmpeq",
+    "body": ["cmpeq\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmpeqi": {
+    "prefix": "cmpeqi",
+    "description": "Snippet for a cmpeqi",
+    "body": ["cmpeqi\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "cmpge": {
+    "prefix": "cmpge",
+    "description": "Snippet for a cmpge",
+    "body": ["cmpge\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmpgei": {
+    "prefix": "cmpgei",
+    "description": "Snippet for a cmpgei",
+    "body": ["cmpgei\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "cmpgeu": {
+    "prefix": "cmpgeu",
+    "description": "Snippet for a cmpgeu",
+    "body": ["cmpgeu\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmpgeui": {
+    "prefix": "cmpgeui",
+    "description": "Snippet for a cmpgeui",
+    "body": ["cmpgeui\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "cmpgt": {
+    "prefix": "cmpgt",
+    "description": "Snippet for a cmpgt",
+    "body": ["cmpgt\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmpgti": {
+    "prefix": "cmpgti",
+    "description": "Snippet for a cmpgti",
+    "body": ["cmpgti\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "mov": {
+    "prefix": "mov",
+    "description": "Snippet for a mov",
+    "body": ["mov\t\t${1:register},\t\t${2:register}\n"]
+  },
+  "movi": {
+    "prefix": "movi",
+    "description": "Snippet for a movi",
+    "body": ["movi\t\t${1:register},\t\t${2:immediate}\n"]
+  },
+  "movia": {
+    "prefix": "movia",
+    "description": "Snippet for a movia",
+    "body": ["movia\t\t${1:register},\t\t${2:immediate address}\n"]
   }
 }

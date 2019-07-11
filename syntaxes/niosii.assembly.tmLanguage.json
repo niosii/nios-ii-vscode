@@ -20,7 +20,7 @@
       "patterns": [
         {
           "name": "keyword.control.niosii",
-          "match": "\\b(br|break|call|callr|ret)\\b"
+          "match": "\\b(br|bret|break|call|callr|ret)\\b"
         },
         {
           "name": "keyword.annonatie.niosii",

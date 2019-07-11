@@ -11,8 +11,9 @@
   "scripts": {
     "build": "vsce package"
   },
-  "dependencies": {
-    "vsce": "1.65.0"
+  "devDependencies": {
+    "vsce": "1.65.0",
+    "vscode": "1.1.35"
   },
   "categories": [
     "Programming Languages"
