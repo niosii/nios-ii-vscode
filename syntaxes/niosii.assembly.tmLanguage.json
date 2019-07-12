@@ -27,12 +27,28 @@
           "match": "(\\.text|\\.end|\\.section|\\.data|\\.equ|\\.org|\\.global)"
         },
         {
-          "name": "keyword.other.opcode.cpu.instruction.niosii",
-          "match": "(?i)\\b(ldw|ldwio|stw|stwio|ldb|ldbio|stb|stbio)(\\.[bwl])?\\b"
+          "name": "keyword.other.opcode.cpu.instruction.io.niosii",
+          "match": "(?i)\\b(ldw|ldwio|ldb|ldbio|ldbu|ldbuio|ldh|ldhio|ldhu|ldhuio|stw|stwio|sth|sthio|stb|stbio|rdctl|rdprs)(\\.[bwl])?\\b"
+        },
+        {
+          "name": "keyword.other.opcode.cpu.instruction.logic.niosii",
+          "match": "(?i)\\b(cmpeq|cmpeqi|cmpge|cmpgei|cmpgeu|cmpgeui|cmpgt|cmpgti|cmpgtu|cmpgtui|cmple|cmplei|cmpleu|cmpleui|cmplt|cmplti|cmpltu|cmpltui|cmpne|cmpnei)(\\.[bwl])?\\b"
+        },
+        {
+          "name": "keyword.other.opcode.cpu.instruction.arithmetic.niosii",
+          "match": "(?i)\\b(add|addi|sub|subi|mul|muli|mulxss|mulxsu|mulxuu|div|divu)(\\.[bwl])?\\b"
+        },
+        {
+          "name": "keyword.other.opcode.cpu.instruction.action.niosii",
+          "match": "(?i)\\b(custom|nop|sync|trap|eret|flushd|flushda|flushi|flushp|initd|initda|jmp|jmpi|nextpc)(\\.[bwl])?\\b"
+        },
+        {
+          "name": "keyword.other.opcode.cpu.instruction.bitwise.niosii",
+          "match": "(?i)\\b(sra|srai|srl|srli|rol|roli|ror|sll|slli)(\\.[bwl])?\\b"
         },
         {
           "name": "keyword.other.opcode.cpu.bwl.niosii",
-          "match": "(?i)\\b(lsr|mov|movi|movia|wddata|neg|negx|not|or|ori|addq|addi|addx|and|andi|andhi|bgt|bge|beq|ble|blt|clr|cmp|cmpi|cmpm|cmp2|eor|eori|rol|ror|roxl|roxr|sub|subi|subq|subx|tbls|tblsn|tblu|tblun|add|lsl)(\\.[bwl])?\\b"
+          "match": "(?i)\\b(mov|movhi|movi|movia|movui|wddata|neg|negx|not|or|orhi|ori|addq|addi|addx|and|andi|andhi|bgt|bge|beq|ble|blt|clr|cmp|cmpi|cmpm|cmp2|eor|eori|rol|ror|roxl|roxr)(\\.[bwl])?\\b"
         }
       ]
     },
@@ -92,7 +108,7 @@
         },
         {
           "name": "keyword.operator.bitwise.niosii",
-          "match": "\\^|\\~|&|\\||\\:|<<|>>"
+          "match": "\\d(\\^|\\~|&|\\||:|<<|>>)\\d"
         }
       ]
     },

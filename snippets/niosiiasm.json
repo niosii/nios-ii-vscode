@@ -209,10 +209,195 @@
     "description": "Snippet for a cmpgti",
     "body": ["cmpgti\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
   },
+  "cmpgtu": {
+    "prefix": "cmpgtu",
+    "description": "Snippet for a cmpgtu",
+    "body": ["cmpgtu\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmpgtui": {
+    "prefix": "cmpgtui",
+    "description": "Snippet for a cmpgtui",
+    "body": ["cmpgtui\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "cmple": {
+    "prefix": "cmple",
+    "description": "Snippet for a cmple",
+    "body": ["cmple\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmplei": {
+    "prefix": "cmplei",
+    "description": "Snippet for a cmplei",
+    "body": ["cmplei\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "cmpleu": {
+    "prefix": "cmpleu",
+    "description": "Snippet for a cmpleu",
+    "body": ["cmpleu\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmpleui": {
+    "prefix": "cmpleui",
+    "description": "Snippet for a cmpleui",
+    "body": ["cmpleui\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "cmplt": {
+    "prefix": "cmplt",
+    "description": "Snippet for a cmpltcmplt",
+    "body": ["cmplt\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmplti": {
+    "prefix": "cmplti",
+    "description": "Snippet for a cmplti",
+    "body": ["cmplti\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "cmpltu": {
+    "prefix": "cmpltu",
+    "description": "Snippet for a cmpltu",
+    "body": ["cmpltu\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmpltui": {
+    "prefix": "cmpltui",
+    "description": "Snippet for a cmpltui",
+    "body": ["cmpltui\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "cmpne": {
+    "prefix": "cmpne",
+    "description": "Snippet for a cmpne",
+    "body": ["cmpne\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "cmpnei": {
+    "prefix": "cmpnei",
+    "description": "Snippet for a cmpnei",
+    "body": ["cmpnei\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "custom": {
+    "prefix": "custom",
+    "description": "Snippet for a custom",
+    "body": ["custom\t\t${1:instruction},\t\t${2:register},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "div": {
+    "prefix": "div",
+    "description": "Snippet for a div",
+    "body": ["div\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "divi": {
+    "prefix": "divi",
+    "description": "Snippet for a divi",
+    "body": ["divi\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "divu": {
+    "prefix": "divu",
+    "description": "Snippet for a divu",
+    "body": ["div\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "eret": {
+    "prefix": "eret",
+    "description": "Snippet for a eret",
+    "body": ["eret\n"]
+  },
+  "flushd": {
+    "prefix": "flushd",
+    "description": "Snippet for a flushd",
+    "body": ["flushd\t\t${1:immediate}(${}2:register)\n"]
+  },
+  "flushda": {
+    "prefix": "flushd",
+    "description": "Snippet for a flushd",
+    "body": ["flushd\t\t${1:immediate}(${}2:register)\n"]
+  },
+  "flushi": {
+    "prefix": "flushi",
+    "description": "Snippet for a flushi",
+    "body": ["flushi\t\t${1:register}\n"]
+  },
+  "flushp": {
+    "prefix": "flushp",
+    "description": "Snippet for a flushp",
+    "body": ["flushp\n"]
+  },
+  "initd": {
+    "prefix": "initd",
+    "description": "Snippet for a initd",
+    "body": ["initd\t\t${1:immediate}(${}2:register)\n"]
+  },
+  "initda": {
+    "prefix": "initda",
+    "description": "Snippet for a initda",
+    "body": ["initda\t\t${1:immediate}(${}2:register)\n"]
+  },
+  "initi": {
+    "prefix": "initi",
+    "description": "Snippet for a initi",
+    "body": ["initi\t\t${1:register}\n"]
+  },
+  "jmp": {
+    "prefix": "jmp",
+    "description": "Snippet for a jmp",
+    "body": ["jmp\t\t${1:register}\n"]
+  },
+  "jmpi": {
+    "prefix": "jmpi",
+    "description": "Snippet for a jmpi",
+    "body": ["jmpi\t\t${1:label}\n"]
+  },
+  "ldb": {
+    "prefix": "ldb",
+    "description": "Snippet for a ldb",
+    "body": ["ldb\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldbio": {
+    "prefix": "ldbio",
+    "description": "Snippet for a ldbio",
+    "body": ["ldbio\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldbu": {
+    "prefix": "ldbu",
+    "description": "Snippet for a ldbu",
+    "body": ["ldbu\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldbuio": {
+    "prefix": "ldbuio",
+    "description": "Snippet for a ldbuio",
+    "body": ["ldbuio\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldh": {
+    "prefix": "ldh",
+    "description": "Snippet for a ldh",
+    "body": ["ldh\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldhio": {
+    "prefix": "ldhio",
+    "description": "Snippet for a ldhio",
+    "body": ["ldhio\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldhu": {
+    "prefix": "ldhu",
+    "description": "Snippet for a ldhu",
+    "body": ["ldhu\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldhuio": {
+    "prefix": "ldhuio",
+    "description": "Snippet for a ldhuio",
+    "body": ["ldhuio\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldw": {
+    "prefix": "ldw",
+    "description": "Snippet for a ldw",
+    "body": ["ldw\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "ldwio": {
+    "prefix": "ldwio",
+    "description": "Snippet for a ldwio",
+    "body": ["ldwio\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
   "mov": {
     "prefix": "mov",
     "description": "Snippet for a mov",
     "body": ["mov\t\t${1:register},\t\t${2:register}\n"]
+  },
+  "movhi": {
+    "prefix": "movhi",
+    "description": "Snippet for a movhi",
+    "body": ["movhi\t\t${1:register},\t\t${2:immediate}\n"]
   },
   "movi": {
     "prefix": "movi",
@@ -223,5 +408,200 @@
     "prefix": "movia",
     "description": "Snippet for a movia",
     "body": ["movia\t\t${1:register},\t\t${2:immediate address}\n"]
+  },
+  "movui": {
+    "prefix": "movui",
+    "description": "Snippet for a movui",
+    "body": ["movui\t\t${1:register},\t\t${2:immediate}\n"]
+  },
+  "mul": {
+    "prefix": "mul",
+    "description": "Snippet for a mul",
+    "body": ["mul\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "muli": {
+    "prefix": "muli",
+    "description": "Snippet for a muli",
+    "body": ["muli\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "mulxss": {
+    "prefix": "mulxss",
+    "description": "Snippet for a mulxss",
+    "body": ["mulxuu\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "mulxsu": {
+    "prefix": "mulxsu",
+    "description": "Snippet for a mulxsu",
+    "body": ["mulxsu\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "mulxuu": {
+    "prefix": "mulxuu",
+    "description": "Snippet for a mulxuu",
+    "body": ["mulxuu\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "nextpc": {
+    "prefix": "nextpc",
+    "description": "Snippet for a nextpc",
+    "body": ["nextpc\t\t${1:register}\n"]
+  },
+  "nop": {
+    "prefix": "nop",
+    "description": "Snippet for a nop",
+    "body": ["nop\n"]
+  },
+  "nor": {
+    "prefix": "nor",
+    "description": "Snippet for a nor",
+    "body": ["nor\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "or": {
+    "prefix": "or",
+    "description": "Snippet for a or",
+    "body": ["or\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "orhi": {
+    "prefix": "orhi",
+    "description": "Snippet for a orhi",
+    "body": ["orhi\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "ori": {
+    "prefix": "ori",
+    "description": "Snippet for a or",
+    "body": ["ori\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "rdctl": {
+    "prefix": "rdctl",
+    "description": "Snippet for a rdctl",
+    "body": ["rdctl\t\t${1:target},\t\t${2:register},\t\t${3:ctlN}\n"]
+  },
+  "rdprs": {
+    "prefix": "rdprs",
+    "description": "Snippet for a rdprs",
+    "body": ["rdprs\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "ret": {
+    "prefix": "ret",
+    "description": "Snippet for a ret",
+    "body": ["ret\n"]
+  },
+  "rol": {
+    "prefix": "rol",
+    "description": "Snippet for a rol",
+    "body": ["rol\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "roli": {
+    "prefix": "roli",
+    "description": "Snippet for a roli",
+    "body": ["ror\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "ror": {
+    "prefix": "ror",
+    "description": "Snippet for a ror",
+    "body": ["ror\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "sll": {
+    "prefix": "sll",
+    "description": "Snippet for a sll",
+    "body": ["sll\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "slli": {
+    "prefix": "slli",
+    "description": "Snippet for a slli",
+    "body": ["slli\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "sra": {
+    "prefix": "sra",
+    "description": "Snippet for a sra",
+    "body": ["sra\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "srai": {
+    "prefix": "srai",
+    "description": "Snippet for a srai",
+    "body": ["srai\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "srl": {
+    "prefix": "srl",
+    "description": "Snippet for a srl",
+    "body": ["srl\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "srli": {
+    "prefix": "srli",
+    "description": "Snippet for a srli",
+    "body": ["srli\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "stb": {
+    "prefix": "stb",
+    "description": "Snippet for a stb",
+    "body": ["stb\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "stbio": {
+    "prefix": "stbio",
+    "description": "Snippet for a stbio",
+    "body": ["stbio\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "sth": {
+    "prefix": "sth",
+    "description": "Snippet for a sth",
+    "body": ["sth\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "sthio": {
+    "prefix": "sthio",
+    "description": "Snippet for a sthio",
+    "body": ["sthio\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "stw": {
+    "prefix": "stw",
+    "description": "Snippet for a stw",
+    "body": ["stw\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "stwio": {
+    "prefix": "stwio",
+    "description": "Snippet for a stwio",
+    "body": ["stwio\t\t${1:target},\t\t${2:byte_offset}(${3:register})\n"]
+  },
+  "sub": {
+    "prefix": "sub",
+    "description": "Snippet for a sub",
+    "body": ["sub\t\t${1:target},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "subi": {
+    "prefix": "subi",
+    "description": "Snippet for a subi",
+    "body": ["subi\t\t${1:target},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "sync": {
+    "prefix": "sync",
+    "description": "Snippet for a sync",
+    "body": ["sync\n"]
+  },
+  "trap": {
+    "prefix": "trap",
+    "description": "Snippet for a trap",
+    "body": ["trap\n"]
+  },
+  "wrctl": {
+    "prefix": "wrctl",
+    "description": "Snippet for a wrctl",
+    "body": ["wrctl\t\t${1:ctlN},\t\t${2:register}\n"]
+  },
+  "wrprs": {
+    "prefix": "wrprs",
+    "description": "Snippet for a wrprs",
+    "body": ["wrprs\t\t${1:register},\t\t${2:register}\n"]
+  },
+  "xor": {
+    "prefix": "wrctl",
+    "description": "Snippet for a wrctl",
+    "body": ["wrctl\t\t${1:ctlN},\t\t${2:register},\t\t${3:register}\n"]
+  },
+  "xorhi": {
+    "prefix": "wrprs",
+    "description": "Snippet for a wrprs",
+    "body": ["wrprs\t\t${1:register},\t\t${2:register},\t\t${3:immediate}\n"]
+  },
+  "xori": {
+    "prefix": "wrprs",
+    "description": "Snippet for a wrprs",
+    "body": ["wrprs\t\t${1:register},\t\t${2:register},\t\t${3:immediate}\n"]
   }
 }

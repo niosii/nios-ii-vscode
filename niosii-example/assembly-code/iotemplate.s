@@ -27,7 +27,8 @@ _start:
     call	STRING
     call	DIGHT
     call	HEXDIGHT
-_end:	br 	_end
+_end:	    
+    br 	    _end
 # End of the Main
 
 #
