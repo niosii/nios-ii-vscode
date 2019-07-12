@@ -1,4 +1,4 @@
-# ** Some Tips For Developers **
+# **Some Tips For Developers**
 
 ## Markdown
 
