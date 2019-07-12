@@ -15,9 +15,11 @@ _start:	                          # Mainroutine
 	/*
   Some Code
   */
-InfiniteLoop:	                            # Subroutine
-  br InfiniteLoop
-_end:	br 	_end
+InfiniteLoop:	                    # Subroutine
+    br		InfiniteLoop
+    
+_end:
+    br		_end
 
 .section Variables					      # variables declaration sections
 .data
