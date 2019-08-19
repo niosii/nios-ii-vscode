@@ -137,7 +137,7 @@
       "patterns": [
         {
           "name": "variable.language.niosii",
-          "match": "(?i)\\b(r[0-9][0-1]|ra|SP|sp|PC|pc|FP|fp[0-7])\\b"
+          "match": "(?i)\\b(r[0-9]|r1[0-9]|r2[0-3]|et|bt|gp|SP|sp|PC|pc|FP|fp[0-7]|ra|status|estatus|bstatus|ienable|ipending)\\b"
         },
         {
           "name": "variable.name.niosii",

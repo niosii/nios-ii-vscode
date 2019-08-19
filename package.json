@@ -3,16 +3,17 @@
   "displayName": "Nios II",
   "description": "Nios II Language Support for Nois II Assembly Language Programming",
   "publisher": "niosii",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "repository": "https://github.com/estKey/nios-ii",
   "engines": {
     "vscode": "^1.36.0"
   },
   "scripts": {
-    "build": "vsce package"
+    "build": "rimraf *.vsix && vsce package"
   },
   "devDependencies": {
-    "vsce": "1.65.0",
+    "rimraf": "^3.0.0",
+    "vsce": "1.66.0",
     "vscode": "1.1.35"
   },
   "categories": [
