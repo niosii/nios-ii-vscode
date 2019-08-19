@@ -37,7 +37,7 @@
   ".org": {
     "prefix": ".org",
     "description": "Snippet for a org",
-    "body": [".equ\t\t$0\n"]
+    "body": [".org\t\t$0\n"]
   },
   ".equ": {
     "prefix": ".equ",
