@@ -309,7 +309,6 @@ end_pdl_loop:
     addi 	sp, sp, 16
     ret
 
-
 # PrintHexDight Subroutine
 PrintHexDight:
 	subi	sp, sp, 12

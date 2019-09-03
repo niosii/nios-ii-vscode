@@ -3,7 +3,7 @@
   "displayName": "Nios II",
   "description": "Nios II Language Support for Nois II Assembly Language Programming",
   "publisher": "niosii",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "repository": "https://github.com/estKey/nios-ii",
   "engines": {
     "vscode": "^1.36.0"
