@@ -48,7 +48,7 @@
         },
         {
           "name": "keyword.other.opcode.cpu.bwl.niosii",
-          "match": "(?i)\\b(mov|movhi|movi|movia|movui|wddata|neg|negx|not|or|orhi|ori|addq|addi|addx|and|andi|andhi|bgt|bge|beq|ble|blt|clr|cmp|cmpi|cmpm|cmp2|eor|eori|rol|ror|roxl|roxr)(\\.[bwl])?\\b"
+          "match": "(?i)\\b(mov|movhi|movi|movia|movui|wddata|neg|negx|not|or|orhi|ori|addq|addi|addx|and|andi|andhi|bgt|bge|beq|ble|bne|blt|clr|cmp|cmpi|cmpm|cmp2|eor|eori|rol|ror|roxl|roxr)(\\.[bwl])?\\b"
         }
       ]
     },
