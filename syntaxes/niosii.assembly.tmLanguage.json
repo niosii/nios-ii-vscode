@@ -48,7 +48,7 @@
         },
         {
           "name": "keyword.other.opcode.cpu.bwl.niosii",
-          "match": "(?i)\\b(mov|movhi|movi|movia|movui|wddata|neg|negx|not|or|orhi|ori|addq|addi|addx|and|andi|andhi|bgt|bge|beq|ble|bne|blt|clr|cmp|cmpi|cmpm|cmp2|eor|eori|rol|ror|roxl|roxr)(\\.[bwl])?\\b"
+          "match": "(?i)\\b(mov|movhi|movi|movia|movui|wddata|neg|negx|not|or|xor|xori|wrctl|orhi|ori|addq|addi|addx|and|andi|andhi|bgt|bge|beq|ble|bne|blt|clr|cmp|cmpi|cmpm|cmp2|eor|eori|rol|ror|roxl|roxr)(\\.[bwl])?\\b"
         }
       ]
     },
@@ -120,15 +120,15 @@
         },
         {
           "name": "constant.numeric.octal.niosii",
-          "match": "(?<![a-zA-Z])@[0-7]+\\b"
+          "match": "(?<![a-zA-Z])0o[0-7]+\\b"
         },
         {
           "name": "constant.numeric.binary.niosii",
-          "match": "(?<![a-zA-Z])%[01]+\\b"
+          "match": "(?<![a-zA-Z])0b[01]+\\b"
         },
         {
           "name": "constant.numeric.decimal.niosii",
-          "match": "(?<![a-zA-Z])[+-]?[0-9]+\\b"
+          "match": "[+-]?[0-9]+\\b"
         }
       ]
     },
