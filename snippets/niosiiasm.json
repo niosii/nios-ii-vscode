@@ -590,17 +590,17 @@
     "body": ["wrprs\t\t${1:register},\t\t${2:register}\n"]
   },
   "xor": {
-    "prefix": "wrctl",
+    "prefix": "xor",
     "description": "Snippet for a wrctl",
     "body": ["wrctl\t\t${1:ctlN},\t\t${2:register},\t\t${3:register}\n"]
   },
   "xorhi": {
-    "prefix": "wrprs",
+    "prefix": "xorhi",
     "description": "Snippet for a wrprs",
     "body": ["wrprs\t\t${1:register},\t\t${2:register},\t\t${3:immediate}\n"]
   },
   "xori": {
-    "prefix": "wrprs",
+    "prefix": "xori",
     "description": "Snippet for a wrprs",
     "body": ["wrprs\t\t${1:register},\t\t${2:register},\t\t${3:immediate}\n"]
   }
