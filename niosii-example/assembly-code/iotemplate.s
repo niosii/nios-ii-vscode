@@ -20,14 +20,14 @@
 .org 	TEXT_RAM_LOC
 
 # Main
-_start:	
+_start:
 	movia	sp,	LAST_RAM_WORD		# init stack pointer, otherwise you cannot use it
 	movia 	r2,	MSG_STARTUP
 	call 	PrintString
     call	STRING
     call	DIGHT
     call	HEXDIGHT
-_end:	    
+_end:
     br 	    _end
 # End of the Main
 
@@ -44,7 +44,7 @@ STRING:
     ldw		ra, 0(sp)
     addi	sp, sp, 4
     ret
-    
+
 #
 DIGHT:
 	subi	sp, sp, 4
@@ -100,12 +100,12 @@ gc_loop:
 	andi	r4, r2, RVALID_MASK		# mask all bits except RVALID
 	beq		r4, r0, gc_loop			# check to see if something can be read, if not keep checking
 	andi	r2, r2, DATA_MASK		# replace the full data register bit pattern with the character data we actually want
-end_gc_loop:	
+end_gc_loop:
     ldw 	r4, 0(sp)
 	ldw		r3, 4(sp)
 	addi	sp, sp, 8
 	ret
-    
+
 # GetString Subroutine
 ### Will Terminate by typing Enter '\n'
 GetString:
@@ -131,7 +131,7 @@ end_gs_loop:
 	ldw 	ra, 8(sp)
 	addi 	sp, sp, 12
 	ret
-    
+
 # GetDight Subroutine
 # recieve input of dight, any other input will be omitted
 GetDight:
@@ -180,7 +180,7 @@ end_gdl_loop:
     ldw		ra, 8(sp)
 	addi	sp, sp, 12
     ret
-    
+
 # GetHexDight Subroutine
 GetHexDight:
 	subi	sp, sp, 8
@@ -212,7 +212,7 @@ end_ghd_loop:
     ldw		ra, 4(sp)
 	addi	sp, sp, 8
     ret
-      
+
 # GetHexDight Subroutine
 # recieve a list of [word-size] dights, entering 0 will terminate the subroutine
 GetHexDightList:
@@ -236,9 +236,9 @@ end_ghdl_loop:
     ldw		ra, 8(sp)
 	addi	sp, sp, 12
     ret
-    
+
 # PrintChar Subroutine
-PrintChar:							
+PrintChar:
 	subi	sp,	sp,	8				# adjust stack pointer down to reserve space
     stw  	r3, 4(sp)				# save value of register r3 so it can be a temp
     stw  	r4, 0(sp)				# save value of register r4 so it can be a temp
@@ -248,7 +248,7 @@ pc_loop:
     andhi 	r4, r4, WSPACE_MASK		# mask off lower bits to isolate upper bits
     beq   	r4, r0, pc_loop			# if upper bits are zero, loop again
     stwio 	r2, DATA_OFFSET(r3)		# store the character into the JTAG_UART I/O location
-end_pc_loop:  
+end_pc_loop:
     ldw   	r3, 4(sp)				# restore value of r3 from stack
     ldw   	r4, 0(sp)				# restore value of r4 from stack
     addi  	sp, sp, 8				# readjust stack pointer up to deallocate space
@@ -256,7 +256,7 @@ end_pc_loop:
 
 # PrintString Subroutine
 PrintString:
-    subi 	sp,	sp,	12				
+    subi 	sp,	sp,	12
     stw 	ra, 8(sp)				# nested calls -- save ra
     stw 	r3, 4(sp)				# for use as a local pointer in string
     stw 	r2, 0(sp)				# save original string pointer
@@ -285,10 +285,10 @@ PrintDight:
     ldw 	ra, 4(sp)				# recover saved registers
 	addi	sp, sp, 8
     ret
-  
+
 # PrintDight Subroutine
 PrintDightList:
-    subi 	sp,	sp,	16				
+    subi 	sp,	sp,	16
     stw 	ra, 12(sp)				# nested calls -- save ra
     stw 	r2, 8(sp)				# save original string pointer
     stw 	r3, 4(sp)				# for use as a local pointer in string
@@ -320,7 +320,7 @@ PrintHexDight:
     blt		r2, r3, phd_handle_number
     movi	r3, 0x0000000f			# check if the value exceed the upper boundary of hex decimal
     ble		r2, r3, phd_handle_alpha
-    br		end_phd					
+    br		end_phd
 phd_handle_number:
     addi 	r2,	r2,	'0'				# advance the number to become a character
     br		end_phd
@@ -333,16 +333,16 @@ end_phd:
     ldw 	ra, 8(sp)				# recover saved registers
 	addi	sp, sp, 12
     ret
-	
+
 # PrintHexDightList Subroutine
 PrintHexDightList:
-    subi 	sp,	sp,	16				
+    subi 	sp,	sp,	16
     stw 	ra, 12(sp)				# nested calls -- save ra
     stw 	r2, 8(sp)				# save original string pointer
     stw 	r3, 4(sp)				# for use as a local pointer in string
     stw		r4,	0(sp)
     mov 	r3, r2					# prepare local pointer
-    movi	r4,	'\n'	
+    movi	r4,	'\n'
 phdl_loop:
     ldb 	r2, DATA_OFFSET(r3)		# get character
     beq 	r2, r0, end_phdl_loop	# check if character is zero
@@ -362,12 +362,12 @@ end_phdl_loop:
 .data
 .org	DATA_RAM_LOC
 MSG_STARTUP:	.asciz	"NIOS II Assembly Language\n"
-MSG_INTRO:		.asciz	"Wellcome to NISO II Assembly, press:" 
+MSG_INTRO:		.asciz	"Wellcome to NISO II Assembly, press:"
 MSG_PRINTTYPE:	.asciz	"You Typed:\n"
 
 N_STRING:		.word	100
 N_NUMBER:		.word	100
 STRING_BUFFER: 	.skip	100
 NUMBER_BUFFER:	.skip	400
-.end 
+.end
 # End of the Program

@@ -18,7 +18,7 @@ _start:	                          # Mainroutine
     ldw		    r4,		N(r0)        # counter
     muli		r5,		r4,		4
     call		Reverse
-    
+
 _end:
     br		_end
 
@@ -28,21 +28,21 @@ Reverse:
     stw		r2, 4(sp)				# store the original content of register
     stw		r3, 0(sp)
     movi	r4,		0
-    
+
 r_loop:
     ldw		r6,		24(r2)
     stw		r6,		0(r3)
     addi	r3,		r3,		4
     subi	r5,		r5,		4
     bne		r5,		0,		r_loop
-    
+
 r_end:
     ldw 	r3, 0(sp)
 	ldw		r2, 4(sp)
 	ldw		ra, 8(sp)
 	addi	sp, sp, 12
 	ret
-    
+
 .section Variables					      # variables declaration sections
 .data
 .org	DATA_RAM_LOC
@@ -54,5 +54,5 @@ List2:		.skip       100
 /*
 Some Data
 */
-.end 
+.end
 # End of the Program
