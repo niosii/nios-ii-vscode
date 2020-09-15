@@ -1,7 +1,14 @@
 import * as vscode from "vscode";
 import { hoverText } from "./hovertext";
+import * as fs from "fs";
+import * as path from "path";
 
 export function activate(context: vscode.ExtensionContext) {
+  const reference_path = context.asAbsolutePath(
+    path.join("resources", "reference.json")
+  );
+  const reference_data = JSON.parse(fs.readFileSync(reference_path, "utf8"));
+
   vscode.languages.registerHoverProvider("niosii", {
     provideHover(document, position, _token) {
       const line = document.lineAt(position.line);
@@ -14,9 +21,24 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const range = document.getWordRangeAtPosition(position);
-      const word = document.getText(range);
+      let word = document.getText(range);
 
-      const text = hoverText(word);
+      // include leading "." for directives such as `.section`
+      const before = range?.start.with(
+        range.start.line,
+        range.start.character - 1
+      );
+      if (before !== undefined) {
+        const rangeBefore = range?.with(before, range.start);
+        if (rangeBefore !== undefined) {
+          const textBefore = document.getText(rangeBefore);
+          if (textBefore == ".") {
+            word = "." + word;
+          }
+        }
+      }
+
+      const text = hoverText(reference_data, word);
       return text === null
         ? null
         : {
