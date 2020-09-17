@@ -1,0 +1,2216 @@
+{
+  "add": {
+    "type": "instruction",
+    "assemblerSyntax": "add rC, rA, rB",
+    "description": "Calculates the sum of rA and rB. Stores the result in rC. Used for both signed and unsigned addition.",
+    "example": "add r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "add",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "add",
+    "operation": "rC \u2190 rA + rB",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Carry Detection (unsigned operands):\nFollowing an add operation, a carry out of the MSB can be detected by checking whether the unsigned sum is less than one of the unsigned operands. The carry bit can be written to a register, or a conditional branch can be taken based on the carry condition. The following code shows both cases:\n```niosii\nadd rC, rA, rB\ncmpltu rD, rC, rA\nadd rC, rA, rB\nbltu rC, rA, label\n# The original add operation\n# rD is written with the carry bit\n# The original add operation\n# Branch if carry generated\n```\n Overflow Detection (signed operands):\nAn overflow is detected when two positives are added and the sum is negative, or when two negatives are added and the sum is positive. The overflow condition can control a conditional branch, as shown in the following code:\n```niosii\nadd rC, rA, rB\nxor rD, rC, rA\nxor rE, rC, rB\nand rD, rD, rE\nblt rD, r0,label\n# The original add operation\n# Compare signs of sum and rA\n# Compare signs of sum and rB\n# Combine comparisons\n# Branch if overflow occurred\n```\n"
+  },
+  "addi": {
+    "type": "instruction",
+    "assemblerSyntax": "addi rB, rA, IMM16",
+    "description": "Sign-extends the 16-bit immediate value and adds it to the value of rA. Stores the sum in rB.",
+    "example": "addi r6, r7, -100",
+    "exceptions": "None",
+    "instruction": "add immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "addi",
+    "operation": "rB \u2190 rA + \u03c3(IMM16)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Carry Detection (unsigned operands):\nFollowing an addi operation, a carry out of the MSB can be detected by checking whether the unsigned sum is less than one of the unsigned operands. The carry bit can be written to a register, or a conditional branch can be taken based on the carry condition. The following code shows both cases:\n```niosii\naddi rB, rA, IMM16\ncmpltu rD, rB, rA\naddi rB, rA, IMM16\nbltu rB, rA, label\n# The original add operation\n# rD is written with the carry bit\n# The original add operation\n# Branch if carry generated\n```\n Overflow Detection (signed operands):\nAn overflow is detected when two positives are added and the sum is negative, or when two negatives are added and the sum is positive. The overflow condition can control a conditional branch, as shown in the following code:\n```niosii\naddi rB, rA, IMM16\nxor rC, rB, rA\nxorhi rD, rB, IMM16\nand rC, rC, rD\nblt rC, r0,label\n# The original add operation\n# Compare signs of sum and rA\n# Compare signs of sum and IMM\n# Combine comparisons\n# Branch if overflow occurred\n```\n"
+  },
+  "and": {
+    "type": "instruction",
+    "assemblerSyntax": "and rC, rA, rB",
+    "description": "Calculates the bitwise logical AND of rA and rB and stores the result in rC.",
+    "example": "and r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "bitwise logical and",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "and",
+    "operation": "rC \u2190 rA & rB",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "andhi": {
+    "type": "instruction",
+    "assemblerSyntax": "andhi rB, rA, IMM16",
+    "description": "Calculates the bitwise logical AND of rA and (IMM16 : 0x0000) and stores the result in rB.",
+    "example": "andhi r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "bitwise logical and immediate into high halfword",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit unsigned immediate value",
+    "instructionType": "I",
+    "mnemonic": "andhi",
+    "operation": "rB \u2190 rA & (IMM16 : 0x0000)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "andi": {
+    "type": "instruction",
+    "assemblerSyntax": "andi rB, rA, IMM16",
+    "description": "Calculates the bitwise logical AND of rA and (0x0000 : IMM16) and stores the result in rB.",
+    "example": "andi r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "bitwise logical and immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit unsigned immediate value",
+    "instructionType": "I",
+    "mnemonic": "andi",
+    "operation": "rB \u2190 rA & (0x0000 : IMM16)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "beq": {
+    "type": "instruction",
+    "assemblerSyntax": "beq rA, rB, label",
+    "description": "If rA == rB, then beq transfers program control to the instruction at label. In the instruction encoding, the offset given by IMM16 is treated as a signed number of bytes relative to the instruction immediately following beq. The two least-signifi\u2010 cant bits of IMM16 are always zero, because instruction addresses must be word-aligned.",
+    "example": "beq r6, r7, label",
+    "exceptions": "Misaligned destination address",
+    "instruction": "branch if equal",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "beq",
+    "operation": "if (rA == rB) then PC \u2190 PC + 4 + \u03c3(IMM16) else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "bge": {
+    "type": "instruction",
+    "assemblerSyntax": "bge rA, rB, label",
+    "description": "If (signed) rA >= (signed) rB, then bge transfers program control to the instruction at label. In the instruction encoding, the offset given by IMM16 is treated as a signed number of bytes relative to the instruction immediately following bge. The two least-significant bits of IMM16 are always zero, because instruction addresses must be word-aligned.",
+    "example": "bge r6, r7, top_of_loop",
+    "exceptions": "Misaligned destination address",
+    "instruction": "branch if greater than or equal signed",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "bge",
+    "operation": "if ((signed) rA >= (signed) rB) then PC \u2190 PC + 4 + \u03c3(IMM16) else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "bgeu": {
+    "type": "instruction",
+    "assemblerSyntax": "bgeu rA, rB, label",
+    "description": "If (unsigned) rA >= (unsigned) rB, then bgeu transfers program control to the instruction at label. In the instruction encoding, the offset given by IMM16 is treated as a signed number of bytes relative to the instruction immediately following bgeu. The two least-significant bits of IMM16 are always zero, because instruction addresses must be word-aligned.",
+    "example": "bgeu r6, r7, top_of_loop",
+    "exceptions": "Misaligned destination address",
+    "instruction": "branch if greater than or equal unsigned",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "bgeu",
+    "operation": "if ((unsigned) rA >= (unsigned) rB) then PC \u2190 PC + 4 + \u03c3(IMM16) else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "bgt": {
+    "type": "instruction",
+    "assemblerSyntax": "bgt rA, rB, label",
+    "description": "If (signed) rA > (signed) rB, then bgt transfers program control to the instruction at label. Pseudo-instruction bgt is implemented with the blt instruction by swapping the register operands.",
+    "example": "bgt r6, r7, top_of_loop",
+    "instruction": "branch if greater than signed",
+    "mnemonic": "bgt",
+    "operation": "if ((signed) rA > (signed) rB) then PC \u2190 label else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "bgtu": {
+    "type": "instruction",
+    "assemblerSyntax": "bgtu rA, rB, label",
+    "description": "If (unsigned) rA > (unsigned) rB, then bgtu transfers program control to the instruction at label. Pseudo-instruction bgtu is implemented with the bltu instruction by swapping the register operands.",
+    "example": "bgtu r6, r7, top_of_loop",
+    "instruction": "branch if greater than unsigned",
+    "mnemonic": "bgtu",
+    "operation": "if ((unsigned) rA > (unsigned) rB) then PC \u2190 label else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "ble": {
+    "type": "instruction",
+    "assemblerSyntax": "ble rA, rB, label",
+    "description": "If (signed) rA <= (signed) rB, then ble transfers program control to the instruction at label. Pseudo-instruction ble is implemented with the bge instruction by swapping the register operands.",
+    "example": "ble r6, r7, top_of_loop",
+    "instruction": "branch if less than or equal signed",
+    "mnemonic": "ble",
+    "operation": "if ((signed) rA <= (signed) rB) then PC \u2190 label else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "bleu": {
+    "type": "instruction",
+    "assemblerSyntax": "bleu rA, rB, label",
+    "description": "If (unsigned) rA <= (unsigned) rB, then bleu transfers program counter to the instruction at label. Pseudo-instruction bleu is implemented with the bgeu instruction by swapping the register operands.",
+    "example": "bleu r6, r7, top_of_loop",
+    "instruction": "branch if less than or equal to unsigned",
+    "mnemonic": "bleu",
+    "operation": "if ((unsigned) rA <= (unsigned) rB) then PC \u2190 label else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "blt": {
+    "type": "instruction",
+    "assemblerSyntax": "blt rA, rB, label",
+    "description": "If (signed) rA < (signed) rB, then blt transfers program control to the instruction at label. In the instruction encoding, the offset given by IMM16 is treated as a signed number of bytes relative to the instruction immediately following blt. The two least-significant bits of IMM16 are always zero, because instruction addresses must be word-aligned.",
+    "example": "blt r6, r7, top_of_loop",
+    "exceptions": "Misaligned destination address",
+    "instruction": "branch if less than signed",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "blt",
+    "operation": "if ((signed) rA < (signed) rB) then PC \u2190 PC + 4 + \u03c3(IMM16) else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "bltu": {
+    "type": "instruction",
+    "assemblerSyntax": "bltu rA, rB, label",
+    "description": "If (unsigned) rA < (unsigned) rB, then bltu transfers program control to the instruction at label. In the instruction encoding, the offset given by IMM16 is treated as a signed number of bytes relative to the instruction immediately following bltu. The two least-significant bits of IMM16 are always zero, because instruction addresses must be word-aligned.",
+    "example": "bltu r6, r7, top_of_loop",
+    "exceptions": "Misaligned destination address",
+    "instruction": "branch if less than unsigned",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "bltu",
+    "operation": "if ((unsigned) rA < (unsigned) rB) then PC \u2190 PC + 4 + \u03c3(IMM16) else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "bne": {
+    "type": "instruction",
+    "assemblerSyntax": "bne rA, rB, label",
+    "description": "If rA != rB, then bne transfers program control to the instruction at label. In the instruction encoding, the offset given by IMM16 is treated as a signed number of bytes relative to the instruction immediately following bne. The two least-signifi\u2010 cant bits of IMM16 are always zero, because instruction addresses must be word-aligned.",
+    "example": "bne r6, r7, top_of_loop",
+    "exceptions": "Misaligned destination address",
+    "instruction": "branch if not equal",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "bne",
+    "operation": "if (rA != rB) then PC \u2190 PC + 4 + \u03c3(IMM16) else PC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "br": {
+    "type": "instruction",
+    "assemblerSyntax": "br label",
+    "description": "Transfers program control to the instruction at label. In the instruction encoding, the offset given by IMM16 is treated as a signed number of bytes relative to the instruction immediately following br. The two least-significant bits of IMM16 are always zero, because instruction addresses must be word-aligned.",
+    "example": "br top_of_loop",
+    "exceptions": "Misaligned destination address",
+    "instruction": "unconditional branch",
+    "instructionFields": "IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "br",
+    "operation": "PC \u2190 PC + 4 + \u03c3(IMM16)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "break": {
+    "type": "instruction",
+    "assemblerSyntax": "break\nbreak imm",
+    "description": "Breaks program execution and transfers control to the debugger break-processing routine. Saves the address of the next instruction in register ba and saves the contents of the status register in bstatus. Disables interrupts, then transfers execution to the break handler. The 5-bit immediate field imm5 is ignored by the processor, but it can be used by the debugger. break with no argument is the same as break 0.",
+    "example": "break",
+    "exceptions": "Break",
+    "instruction": "debugging breakpoint",
+    "instructionFields": "IMM5 = Type of breakpoint",
+    "instructionType": "R",
+    "mnemonic": "break",
+    "operation": "bstatus \u2190 status PIE \u2190 0 U \u2190 0 ba \u2190 PC + 4 PC \u2190 break handler address",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "break is used by debuggers exclusively. Only debuggers should place break in a user program, operating system, or exception handler. The address of the break handler is specified with the Nios_II Processor parameter editor in Qsys. Some debuggers support break and break 0 instructions in source code. These debuggers treat the break instruction as a normal breakpoint."
+  },
+  "bret": {
+    "type": "instruction",
+    "assemblerSyntax": "bret",
+    "description": "Copies the value of bstatus to the status register, then transfers execution to the address in ba.",
+    "example": "bret",
+    "exceptions": "Misaligned destination address Supervisor-only instruction",
+    "instruction": "breakpoint return",
+    "instructionFields": "None",
+    "instructionType": "R",
+    "mnemonic": "bret",
+    "operation": "status \u2190 bstatus PC \u2190 ba",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "bret is used by debuggers exclusively and should not appear in user programs, operating systems, or exception handlers."
+  },
+  "call": {
+    "type": "instruction",
+    "assemblerSyntax": "call label",
+    "description": "Saves the address of the next instruction in register ra, and transfers execution to the instruction at address (PC31..28 : IMM26 x 4).",
+    "example": "call write_char",
+    "exceptions": "None",
+    "instruction": "call subroutine",
+    "instructionFields": "IMM26 = 26-bit unsigned immediate value",
+    "instructionType": "J",
+    "mnemonic": "call",
+    "operation": "ra \u2190 PC + 4 PC \u2190 (PC31..28 : IMM26 x 4)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "call can transfer execution anywhere within the 256-MB range determined by PC31..28. The Nios II GNU linker does not automatically handle cases in which the address is out of this range."
+  },
+  "callr": {
+    "type": "instruction",
+    "assemblerSyntax": "callr rA",
+    "description": "Saves the address of the next instruction in the return address register, and transfers execution to the address contained in register rA.",
+    "example": "callr r6",
+    "exceptions": "Misaligned destination address",
+    "instruction": "call subroutine in register",
+    "instructionFields": "A = Register index of operand rA",
+    "instructionType": "R",
+    "mnemonic": "callr",
+    "operation": "ra \u2190 PC + 4 PC \u2190 rA",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "callr is used to dereference C-language function pointers."
+  },
+  "cmpeq": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpeq rC, rA, rB",
+    "description": "If rA == rB, then stores 1 to rC; otherwise, stores 0 to rC.",
+    "example": "cmpeq r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "compare equal",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "cmpeq",
+    "operation": "if (rA == rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpeq performs the == operation of the C program\u2010 ming language. Also, cmpeq can be used to implement the C logical negation operator \u201c!\u201d.\n```niosii\ncmpeq rC, rA, r0\n# Implements rC = !rA\n```\n"
+  },
+  "cmpeqi": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpeqi rB, rA, IMM16",
+    "description": "Sign-extends the 16-bit immediate value IMM16 to 32 bits and compares it to the value of rA. If rA == \u03c3(IMM16), cmpeqi stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmpeqi r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "compare equal immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "cmpeqi",
+    "operation": "if (rA \u03c3(IMM16)) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpeqi performs the == operation of the C programming language."
+  },
+  "cmpge": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpge rC, rA, rB",
+    "description": "If rA >= rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmpge r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "compare greater than or equal signed",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "I",
+    "mnemonic": "cmpge",
+    "operation": "if ((signed) rA >= (signed) rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpge performs the signed >= operation of the C programming language."
+  },
+  "cmpgei": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpgei rB, rA, IMM16",
+    "description": "Sign-extends the 16-bit immediate value IMM16 to 32 bits and compares it to the value of rA. If rA >= \u03c3(IMM16), then cmpgei stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmpgei r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "compare greater than or equal signed immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "R",
+    "mnemonic": "cmpgei",
+    "operation": "if ((signed) rA >= (signed) \u03c3(IMM16)) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpgei performs the signed >= operation of the C programming language."
+  },
+  "cmpgeu": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpgeu rC, rA, rB",
+    "description": "If rA >= rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmpgeu r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "compare greater than or equal unsigned",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "cmpgeu",
+    "operation": "if ((unsigned) rA >= (unsigned) rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpgeu performs the unsigned >= operation of the C programming language."
+  },
+  "cmpgeui": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpgeui rB, rA, IMM16",
+    "description": "Zero-extends the 16-bit immediate value IMM16 to 32 bits and compares it to the value of rA. If rA >= (0x0000 : IMM16), then cmpgeui stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmpgeui r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "compare greater than or equal unsigned immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit unsigned immediate value",
+    "instructionType": "I",
+    "mnemonic": "cmpgeui",
+    "operation": "if ((unsigned) rA >= (unsigned) (0x0000 : IMM16)) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpgeui performs the unsigned >= operation of the C programming language."
+  },
+  "cmpgt": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpgt rC, rA, rB",
+    "description": "If rA > rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmpgt r6, r7, r8",
+    "instruction": "compare greater than signed",
+    "mnemonic": "cmpgt",
+    "operation": "if ((signed) rA > (signed) rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpgt performs the signed > operation of the C programming language. Pseudo-instruction cmpgt is implemented with the cmplt instruction by swapping its rA and rB operands."
+  },
+  "cmpgti": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpgti rB, rA, IMMED",
+    "description": "Sign-extends the immediate value IMMED to 32 bits and compares it to the value of rA. If rA > \u03c3(IMMED), then cmpgti stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmpgti r6, r7, 100",
+    "instruction": "compare greater than signed immediate",
+    "mnemonic": "cmpgti",
+    "operation": "if ((signed) rA > (signed) IMMED) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpgti performs the signed > operation of the C programming language. The maximum allowed value of IMMED is 32766. The minimum allowed value is \u201332769. Pseudo-instruction cmpgti is implemented using a cmpgei instruction with an IMM16 immediate value of IMMED + 1."
+  },
+  "cmpgtu": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpgtu rC, rA, rB",
+    "description": "If rA > rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmpgtu r6, r7, r8",
+    "instruction": "compare greater than unsigned",
+    "mnemonic": "cmpgtu",
+    "operation": "if ((unsigned) rA > (unsigned) rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpgtu performs the unsigned > operation of the C programming language. Pseudo-instruction cmpgtu is implemented with the cmpltu instruction by swapping its rA and rB operands."
+  },
+  "cmpgtui": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpgtui rB, rA, IMMED",
+    "description": "Zero-extends the immediate value IMMED to 32 bits and compares it to the value of rA. If rA > IMMED, then cmpgtui stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmpgtui r6, r7, 100",
+    "instruction": "compare greater than unsigned immediate",
+    "mnemonic": "cmpgtui",
+    "operation": "if ((unsigned) rA > (unsigned) IMMED) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpgtui performs the unsigned > operation of the C programming language. The maximum allowed value of IMMED is 65534. The minimum allowed value is 0. Pseudo-instruction cmpgtui is implemented using a cmpgeui instruc\u2010 tion with an IMM16 immediate value of IMMED + 1."
+  },
+  "cmple": {
+    "type": "instruction",
+    "assemblerSyntax": "cmple rC, rA, rB",
+    "description": "If rA <= rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmple r6, r7, r8",
+    "instruction": "compare less than or equal signed",
+    "mnemonic": "cmple",
+    "operation": "if ((signed) rA <= (signed) rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmple performs the signed <= operation of the C programming language. Pseudo-instruction cmple is implemented with the cmpge instruction by swapping its rA and rB operands."
+  },
+  "cmplei": {
+    "type": "instruction",
+    "assemblerSyntax": "cmplei rB, rA, IMMED",
+    "description": "Sign-extends the immediate value IMMED to 32 bits and compares it to the value of rA. If rA <= \u03c3(IMMED), then cmplei stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmplei r6, r7, 100",
+    "instruction": "compare less than or equal signed immediate",
+    "mnemonic": "cmplei",
+    "operation": "if ((signed) rA < (signed) IMMED) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmplei performs the signed <= operation of the C programming language. The maximum allowed value of IMMED is 32766. The minimum allowed value is \u201332769. Pseudo-instruction cmplei is implemented using a cmplti instruction with an IMM16 immediate value of IMMED + 1."
+  },
+  "cmpleu": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpleu rC, rA, rB",
+    "description": "If rA <= rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmpleu r6, r7, r8",
+    "instruction": "compare less than or equal unsigned",
+    "mnemonic": "cmpleu",
+    "operation": "if ((unsigned) rA < (unsigned) rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpleu performs the unsigned <= operation of the C programming language. Pseudo-instruction cmpleu is implemented with the cmpgeu instruction by swapping its rA and rB operands."
+  },
+  "cmpleui": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpleui rB, rA, IMMED",
+    "description": "Zero-extends the immediate value IMMED to 32 bits and compares it to the value of rA. If rA <= IMMED, then cmpleui stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmpleui r6, r7, 100",
+    "instruction": "compare less than or equal unsigned immediate",
+    "mnemonic": "cmpleui",
+    "operation": "if ((unsigned) rA <= (unsigned) IMMED) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpleui performs the unsigned <= operation of the C programming language. The maximum allowed value of IMMED is 65534. The minimum allowed value is 0. Pseudo-instruction cmpleui is implemented using a cmpltui instruc\u2010 tion with an IMM16 immediate value of IMMED + 1."
+  },
+  "cmplt": {
+    "type": "instruction",
+    "assemblerSyntax": "cmplt rC, rA, rB",
+    "description": "If rA < rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmplt r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "compare less than signed",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "cmplt",
+    "operation": "if ((signed) rA < (signed) rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmplt performs the signed < operation of the C programming language."
+  },
+  "cmplti": {
+    "type": "instruction",
+    "assemblerSyntax": "cmplti rB, rA, IMM16",
+    "description": "Sign-extends the 16-bit immediate value IMM16 to 32 bits and compares it to the value of rA. If rA < \u03c3(IMM16), then cmplti stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmplti r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "compare less than signed immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "cmplti",
+    "operation": "if ((signed) rA < (signed) \u03c3(IMM16)) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmplti performs the signed < operation of the C programming language."
+  },
+  "cmpltu": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpltu rC, rA, rB",
+    "description": "If rA < rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmpltu r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "compare less than unsigned",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "cmpltu",
+    "operation": "if ((unsigned) rA < (unsigned) rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpltu performs the unsigned < operation of the C programming language."
+  },
+  "cmpltui": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpltui rB, rA, IMM16",
+    "description": "Zero-extends the 16-bit immediate value IMM16 to 32 bits and compares it to the value of rA. If rA < (0x0000 : IMM16), then cmpltui stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmpltui r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "compare less than unsigned immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit unsigned immediate value",
+    "instructionType": "I",
+    "mnemonic": "cmpltui",
+    "operation": "if ((unsigned) rA < (unsigned) (0x0000 : IMM16)) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpltui performs the unsigned < operation of the C programming language."
+  },
+  "cmpne": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpne rC, rA, rB",
+    "description": "If rA != rB, then stores 1 to rC; otherwise stores 0 to rC.",
+    "example": "cmpne r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "compare not equal",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "cmpne",
+    "operation": "if (rA != rB) then rC \u2190 1 else rC \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpne performs the != operation of the C program\u2010 ming language."
+  },
+  "cmpnei": {
+    "type": "instruction",
+    "assemblerSyntax": "cmpnei rB, rA, IMM16",
+    "description": "Sign-extends the 16-bit immediate value IMM16 to 32 bits and compares it to the value of rA. If rA != \u03c3(IMM16), then cmpnei stores 1 to rB; otherwise stores 0 to rB.",
+    "example": "cmpnei r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "compare not equal immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "cmpnei",
+    "operation": "if (rA != \u03c3(IMM16)) then rB \u2190 1 else rB \u2190 0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "cmpnei performs the != operation of the C programming language."
+  },
+  "custom": {
+    "type": "instruction",
+    "assemblerSyntax": "custom N, xC, xA, xB Where xA means either general purpose register rA, or custom register cA.",
+    "description": "The custom opcode provides access to up to 256 custom instructions allowed by the Nios II architec\u2010 ture. The function implemented by a custom instruction is user-defined and is specified with the Nios_II Processor parameter editor in Qsys. The 8-bit immediate N field specifies which custom instruction to use. Custom instructions can use up to two parameters, xA and xB, and can optionally write the result to a register xC.",
+    "example": "custom 0, c6, r7, r8",
+    "exceptions": "None",
+    "instruction": "custom instruction",
+    "instructionFields": "A = Register index of operand A B = Register index of operand B C = Register index of operand C readra = 1 if instruction uses rA, 0 otherwise readrb = 1 if instruction uses rB, 0 otherwise writerc = 1 if instruction provides result for rC, 0 otherwise N = 8-bit number that selects instruction",
+    "instructionType": "R",
+    "mnemonic": "custom",
+    "operation": "if c == 1 then rC \u2190 fN(rA, rB, A, B, C) else \u00d8 \u2190 fN(rA, rB, A, B, C)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "To access a custom register inside the custom instruction logic, clear the bit readra, readrb, or writerc that corresponds to the register field. In assembler syntax, the notation cN refers to register N in the custom register file and causes the assembler to clear the c bit of the opcode. For example, custom 0, c3, r5, r0 performs custom instruction 0, operating on general-purpose registers r5 and r0, and stores the result in custom register 3."
+  },
+  "div": {
+    "type": "instruction",
+    "assemblerSyntax": "div rC, rA, rB",
+    "description": "Treating rA and rB as signed integers, this instruc\u2010 tion divides rA by rB and then stores the integer portion of the resulting quotient to rC. After attempted division by zero, the value of rC is undefined. There is no divide-by-zero exception. After dividing \u20132147483648 by \u20131, the value of rC is undefined (the number +2147483648 is not representable in 32 bits). There is no overflow exception. Nios II processors that do not implement the div instruction cause an unimplemented instruction exception.",
+    "example": "div r6, r7, r8",
+    "exceptions": "Division error Unimplemented instruction",
+    "instruction": "divide",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "div",
+    "operation": "rC \u2190 rA \u00f7 rB",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Remainder of Division:\nIf the result of the division is defined, then the remainder can be computed in rD using the following instruction sequence:\n```niosii\ndiv rC, rA, rB\nmul rD, rC, rB\nsub rD, rA, rD\n# The original div operation\n# rD = remainder\n```\n"
+  },
+  "divu": {
+    "type": "instruction",
+    "assemblerSyntax": "divu rC, rA, rB",
+    "description": "Treating rA and rB as unsigned integers, this instruction divides rA by rB and then stores the integer portion of the resulting quotient to rC. After attempted division by zero, the value of rC is undefined. There is no divide-by-zero exception. Nios II processors that do not implement the divu instruction cause an unimplemented instruction exception.",
+    "example": "divu r6, r7, r8",
+    "exceptions": "Division error Unimplemented instruction",
+    "instruction": "divide unsigned",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "divu",
+    "operation": "rC \u2190 rA \u00f7 rB",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Remainder of Division:\nIf the result of the division is defined, then the remainder can be computed in rD using the following instruction sequence:\n```niosii\ndivu rC, rA, rB\nmul rD, rC, rB\nsub rD, rA, rD\n# The original divu operation\n# rD = remainder\n```\n"
+  },
+  "eret": {
+    "type": "instruction",
+    "assemblerSyntax": "eret",
+    "description": "Copies the value of estatus into the status register, and transfers execution to the address in ea.",
+    "example": "eret",
+    "exceptions": "Misaligned destination address Supervisor-only instruction",
+    "instruction": "exception return",
+    "instructionFields": "None",
+    "instructionType": "R",
+    "mnemonic": "eret",
+    "operation": "status \u2190 estatus PC \u2190 ea",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use eret to return from traps, external interrupts, and other exception handling routines. Note that before returning from hardware interrupt exceptions, the exception handler must adjust the ea register."
+  },
+  "flushd": {
+    "type": "instruction",
+    "assemblerSyntax": "flushd IMM16(rA)",
+    "description": "If the Nios II processor implements a direct mapped data cache, flushd writes the data cache line that is mapped to the specified address back to memory if the line is dirty, and then clears the data cache line. Unlike flushda, flushd writes the dirty data back to memory even when the addressed data is not currently in the cache. This process comprises the following steps:\nsum of rA and the signed 16-bit immediate value. computed effective address. Each data cache effective address comprises a tag field and a line field. When identifying the data cache line, flushd ignores the tag field and only uses the line field to select the data cache line to clear. effective address to determine if the addressed data is currently cached. Because flushd ignores the cache line tag, flushd flushes the cache line regardless of whether the specified data location is currently cached. to memory. A cache line is dirty when one or more words of the cache line have been modified by the processor, but are not yet written to memory. If the Nios II processor core does not have a data cache, the flushd instruction performs no operation.",
+    "example": "flushd -100(r6)",
+    "exceptions": "None",
+    "instruction": "flush data cache line",
+    "instructionFields": "A = Register index of operand rA IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "flushd",
+    "operation": "Flushes the data cache line associated with address rA + \u03c3(IMM16).",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use flushd to write dirty lines back to memory even if the addressed memory location is not in the cache, and then flush the cache line. By contrast, refer to \u201cflushda flush data cache address\u201d, \u201cinitd initialize data cache line\u201d, and \u201cinitda initialize data cache address\u201d for other cache-clearing options. For more information on data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "flushda": {
+    "type": "instruction",
+    "assemblerSyntax": "flushda IMM16(rA)",
+    "description": "If the Nios II processor implements a direct mapped data cache, flushda writes the data cache line that is mapped to the specified address back to memory if the line is dirty, and then clears the data cache line. Unlike flushd, flushda writes the dirty data back to memory only when the addressed data is currently in the cache. This process comprises the following steps:\nsum of rA and the signed 16-bit immediate value. computed effective address. Each data cache effective address comprises a tag field and a line field. When identifying the line, flushda uses both the tag field and the line field. address to determine if the addressed data is currently cached. If the tag fields do not match, the effective address is not currently cached, so the instruction does nothing. match, write the dirty cache line back to memory. A cache line is dirty when one or more words of the cache line have been modified by the processor, but are not yet written to memory. If the Nios II processor core does not have a data cache, the flushda instruction performs no operation.",
+    "example": "flushda -100(r6)",
+    "exceptions": "Supervisor-only data address Fast TLB miss (data) Double TLB miss (data) MPU region violation (data)",
+    "instruction": "flush data cache address",
+    "instructionFields": "A = Register index of operand rA IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "flushda",
+    "operation": "Flushes the data cache line currently caching address rA + \u03c3(IMM16)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use flushda to write dirty lines back to memory only if the addressed memory location is currently in the cache, and then flush the cache line. By contrast, refer to \u201cflushd flush data cache line\u201d, \u201cinitd initialize data cache line\u201d, and \u201cinitda initialize data cache address\u201d for other cache-clearing options. For more information on the Nios II data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "flushi": {
+    "type": "instruction",
+    "assemblerSyntax": "flushi rA",
+    "description": "Ignoring the tag, flushi identifies the instruction cache line associated with the byte address in rA, and invalidates that line. If the Nios II processor core does not have an instruction cache, the flushi instruction performs no operation. For more information about the data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook.",
+    "example": "flushi r6",
+    "exceptions": "None",
+    "instruction": "flush instruction cache line",
+    "instructionFields": "A = Register index of operand rA",
+    "instructionType": "R",
+    "mnemonic": "flushi",
+    "operation": "Flushes the instruction cache line associated with address rA.",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "flushp": {
+    "type": "instruction",
+    "assemblerSyntax": "flushp",
+    "description": "Ensures that any instructions prefetched after the flushp instruction are removed from the pipeline.",
+    "example": "flushp",
+    "exceptions": "None",
+    "instruction": "flush pipeline",
+    "instructionFields": "None",
+    "instructionType": "R",
+    "mnemonic": "flushp",
+    "operation": "Flushes the processor pipeline of any prefetched instructions.",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use flushp before transferring control to newly updated instruction memory."
+  },
+  "initd": {
+    "type": "instruction",
+    "assemblerSyntax": "initd IMM16(rA)",
+    "description": "If the Nios II processor implements a direct mapped data cache, initd clears the data cache line without checking for (or writing) a dirty data cache line that is mapped to the specified address back to memory. Unlike initda, initd clears the cache line regardless of whether the addressed data is currently cached. This process comprises the following steps:\nsum of rA and the signed 16-bit immediate value. computed effective address. Each data cache effective address comprises a tag field and a line field. When identifying the line, initd ignores the tag field and only uses the line field to select the data cache line to clear. effective address to determine if the addressed data is currently cached. Because initd ignores the cache line tag, initd flushes the cache line regardless of whether the specified data location is currently cached. Because initd skips the dirty cache line check, data that has been modified by the processor, but not yet written to memory is lost. If the Nios II processor core does not have a data cache, the initd instruction performs no operation.",
+    "example": "initd 0(r6)",
+    "exceptions": "Supervisor-only instruction",
+    "instruction": "initialize data cache line",
+    "instructionFields": "A = Register index of operand rA IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "initd",
+    "operation": "Initializes the data cache line associated with address rA + \u03c3(IMM16).",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use initd after processor reset and before accessing data memory to initialize the processor\u2019s data cache. Use initd with caution because it does not write back dirty data. By contrast, refer to \u201cflushd flush data cache line\u201d, \u201cflushda flush data cache address\u201d, and \u201cinitda initialize data cache address\u201d for other cache-clearing options. Altera recommends using initd only when the processor comes out of reset. For more information on data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "initda": {
+    "type": "instruction",
+    "assemblerSyntax": "initda IMM16(rA)",
+    "description": "If the Nios II processor implements a direct mapped data cache, initda clears the data cache line without checking for (or writing) a dirty data cache line that is mapped to the specified address back to memory. Unlike initd, initda clears the cache line only when the addressed data is currently cached. This process comprises the following steps:\nsum of rA and the signed 16-bit immediate value. computed effective address. Each data cache effective address comprises a tag field and a line field. When identifying the line, initda uses both the tag field and the line field. address to determine if the addressed data is currently cached. If the tag fields do not match, the effective address is not currently cached, so the instruction does nothing. Because initd skips the dirty cache line check, data that has been modified by the processor, but not yet written to memory is lost. If the Nios II processor core does not have a data cache, the initda instruction performs no operation.",
+    "example": "initda -100(r6)",
+    "exceptions": "Supervisor-only data address Fast TLB miss (data) Double TLB miss (data) MPU region violation (data) Unimplemented instruction",
+    "instruction": "initialize data cache address",
+    "instructionFields": "A = Register index of operand rA IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "initda",
+    "operation": "Initializes the data cache line currently caching address rA + \u03c3(IMM16)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use initda to skip writing dirty lines back to memory and to flush the cache line only if the addressed memory location is currently in the cache. By contrast, refer to \u201cflushd flush data cache line\u201d, \u201cflushda flush data cache address\u201d, and \u201cinitd initialize data cache line\u201d on page 8\u201355 for other cache-clearing options. Use initda with caution because it does not write back dirty data. For more information on the Nios II data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "initi": {
+    "type": "instruction",
+    "assemblerSyntax": "initi rA",
+    "description": "Ignoring the tag, initi identifies the instruction cache line associated with the byte address in ra, and initi invalidates that line. If the Nios II processor core does not have an instruction cache, the initi instruction performs no operation.",
+    "example": "initi r6",
+    "exceptions": "Supervisor-only instruction",
+    "instruction": "initialize instruction cache line",
+    "instructionFields": "A = Register index of operand rA",
+    "instructionType": "R",
+    "mnemonic": "initi",
+    "operation": "Initializes the instruction cache line associated with address rA.",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "This instruction is used to initialize the processor\u2019s instruction cache. Immediately after processor reset, use initi to invalidate each line of the instruction cache. For more information on instruction cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "jmp": {
+    "type": "instruction",
+    "assemblerSyntax": "jmp rA",
+    "description": "Transfers execution to the address contained in register rA.",
+    "example": "jmp r12",
+    "exceptions": "Misaligned destination address",
+    "instruction": "computed jump",
+    "instructionFields": "A = Register index of operand rA",
+    "instructionType": "R",
+    "mnemonic": "jmp",
+    "operation": "PC \u2190 rA",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "It is illegal to jump to the address contained in register r31. To return from subroutines called by call or callr, use ret instead of jmp."
+  },
+  "jmpi": {
+    "type": "instruction",
+    "assemblerSyntax": "jmpi label",
+    "description": "Transfers execution to the instruction at address (PC31..28 : IMM26 x 4).",
+    "example": "jmpi write_char",
+    "exceptions": "None",
+    "instruction": "jump immediate",
+    "instructionFields": "IMM26 = 26-bit unsigned immediate value",
+    "instructionType": "J",
+    "mnemonic": "jmpi",
+    "operation": "PC \u2190 (PC31..28 : IMM26 x 4)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "jmpi is a low-overhead local jump. jmpi can transfer execution anywhere within the 256-MB range determined by PC31..28. The Nios II GNU linker does not automatically handle cases in which the address is out of this range."
+  },
+  "ldb / ldbio": {
+    "type": "instruction",
+    "assemblerSyntax": "ldb rB, byte_offset(rA)\nldbio rB, byte_offset(rA)",
+    "description": "Computes the effective byte address specified by the sum of rA and the instruction's signed 16-bit immediate value. Loads register rB with the desired memory byte, sign extending the 8-bit value to 32 bits. In Nios II processor cores with a data cache, this instruction may retrieve the desired data from the cache instead of from memory.",
+    "example": "ldb r6, 100(r5)",
+    "exceptions": "Supervisor-only data address Misaligned data address TLB permission violation (read) Fast TLB miss (data) Double TLB miss (data) MPU region violation (data)",
+    "instruction": "load byte from memory or I/O peripheral",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value Table 9: ldb",
+    "instructionType": "I",
+    "mnemonic": "ldb / ldbio",
+    "operation": "rB \u2190 \u03c3(Mem8[rA + \u03c3(IMM16)])",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use the ldbio instruction for peripheral I/O. In processors with a data cache, ldbio bypasses the cache and is guaranteed to generate an Avalon-MM data transfer. In processors without a data cache, ldbio acts like ldb. For more information on data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "ldbu / ldbuio": {
+    "type": "instruction",
+    "assemblerSyntax": "ldbu rB, byte_offset(rA)\nldbuio rB, byte_offset(rA)",
+    "description": "Computes the effective byte address specified by the sum of rA and the instruction's signed 16-bit immediate value. Loads register rB with the desired memory byte, zero extending the 8-bit value to 32 bits.",
+    "example": "ldbu r6, 100(r5)",
+    "exceptions": "Supervisor-only data address Misaligned data address TLB permission violation (read) Fast TLB miss (data) Double TLB miss (data) MPU region violation (data)",
+    "instruction": "load unsigned byte from memory or I/O peripheral",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value Table 11: ldbu",
+    "instructionType": "I",
+    "mnemonic": "ldbu / ldbuio",
+    "operation": "rB \u2190 0x000000 : Mem8[rA + \u03c3(IMM16)]",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "In processors with a data cache, this instruction may retrieve the desired data from the cache instead of from memory. Use the ldbuio instruction for peripheral I/O. In processors with a data cache, ldbuio bypasses the cache and is guaranteed to generate an Avalon-MM data transfer. In processors without a data cache, ldbuio acts like ldbu. For more information on data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "ldh / ldhio": {
+    "type": "instruction",
+    "assemblerSyntax": "ldh rB, byte_offset(rA)\nldhio rB, byte_offset(rA)",
+    "description": "Computes the effective byte address specified by the sum of rA and the instruction's signed 16-bit immediate value. Loads register rB with the memory halfword located at the effective byte address, sign extending the 16-bit value to 32 bits. The effective byte address must be halfword aligned. If the byte address is not a multiple of 2, the operation is undefined.",
+    "example": "ldh r6, 100(r5)",
+    "exceptions": "Supervisor-only data address Misaligned data address TLB permission violation (read) Fast TLB miss (data) Double TLB miss (data) MPU region violation (data)",
+    "instruction": "load halfword from memory or I/O peripheral",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value Table 13: ldh",
+    "instructionType": "I",
+    "mnemonic": "ldh / ldhio",
+    "operation": "rB \u2190 \u03c3(Mem16[rA + \u03c3(IMM16)])",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "In processors with a data cache, this instruction may retrieve the desired data from the cache instead of from memory. Use the ldhio instruction for peripheral I/O. In processors with a data cache, ldhio bypasses the cache and is guaranteed to generate an Avalon-MM data transfer. In processors without a data cache, ldhio acts like ldh. For more information on data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "ldhu / ldhuio": {
+    "type": "instruction",
+    "assemblerSyntax": "ldhu rB, byte_offset(rA)\nldhuio rB, byte_offset(rA)",
+    "description": "Computes the effective byte address specified by the sum of rA and the instruction's signed 16-bit immediate value. Loads register rB with the memory halfword located at the effective byte address, zero extending the 16-bit value to 32 bits. The effective byte address must be halfword aligned. If the byte address is not a multiple of 2, the operation is undefined.",
+    "example": "ldhu r6, 100(r5)",
+    "exceptions": "Supervisor-only data address Misaligned data address TLB permission violation (read) Fast TLB miss (data) Double TLB miss (data) MPU region violation (data)",
+    "instruction": "load unsigned halfword from memory or I/O peripheral",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value Table 15: ldhu",
+    "instructionType": "I",
+    "mnemonic": "ldhu / ldhuio",
+    "operation": "rB \u2190 0x0000 : Mem16[rA + \u03c3(IMM16)]",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "In processors with a data cache, this instruction may retrieve the desired data from the cache instead of from memory. Use the ldhuio instruction for peripheral I/O. In processors with a data cache, ldhuio bypasses the cache and is guaranteed to generate an Avalon-MM data transfer. In processors without a data cache, ldhuio acts like ldhu. For more information on data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "ldw / ldwio": {
+    "type": "instruction",
+    "assemblerSyntax": "ldw rB, byte_offset(rA)\nldwio rB, byte_offset(rA)",
+    "description": "Computes the effective byte address specified by the sum of rA and the instruction's signed 16-bit immediate value. Loads register rB with the memory word located at the effective byte address. The effective byte address must be word aligned. If the byte address is not a multiple of 4, the operation is undefined.",
+    "example": "ldw r6, 100(r5)",
+    "exceptions": "Supervisor-only data address Misaligned data address TLB permission violation (read) Fast TLB miss (data) Double TLB miss (data) MPU region violation (data)",
+    "instruction": "load 32-bit word from memory or I/O peripheral",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value Table 17: ldw",
+    "instructionType": "I",
+    "mnemonic": "ldw / ldwio",
+    "operation": "rB \u2190 Mem32[rA + \u03c3(IMM14)]",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "In processors with a data cache, this instruction may retrieve the desired data from the cache instead of from memory. Use the ldwio instruction for peripheral I/O. In processors with a data cache, ldwio bypasses the cache and memory. Use the ldwio instruction for peripheral I/O. In processors with a data cache, ldwio bypasses the cache and is guaranteed to generate an Avalon-MM data transfer. In processors without a data cache, ldwio acts like ldw. For more information on data cache, refer to the Cache and Tightly Coupled Memory chapter of the Nios II Software Developer\u2019s Handbook."
+  },
+  "mov": {
+    "type": "instruction",
+    "assemblerSyntax": "mov rC, rA",
+    "description": "Moves the contents of rA to rC. Pseudo-instruction mov is implemented as add rC, rA, r0.",
+    "example": "mov r6, r7",
+    "instruction": "move register to register",
+    "mnemonic": "mov",
+    "operation": "rC \u2190 rA",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "movhi": {
+    "type": "instruction",
+    "assemblerSyntax": "movhi rB, IMMED",
+    "description": "Writes the immediate value IMMED into the high halfword of rB, and clears the lower halfword of rB to 0x0000.",
+    "example": "movhi r6, 0x8000",
+    "instruction": "move immediate into high halfword",
+    "mnemonic": "movhi",
+    "operation": "rB \u2190 (IMMED : 0x0000)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "The maximum allowed value of IMMED is 65535. The minimum allowed value is 0. To load a 32-bit constant into a register, first load the upper 16 bits using a movhi pseudo-instruction. The %hi() macro can be used to extract the upper 16 bits of a constant or a label. Then, load the lower 16 bits with an ori instruction. The %lo() macro can be used to extract the lower 16 bits of a constant or label as shown in the following code:\n```niosii\nmovhi rB, %hi(value)\nori rB, rB, %lo(value)\n```\n An alternative method to load a 32-bit constant into a register uses the %hiadj() macro and the addi instruction as shown in the following code:\n```niosii\nmovhi rB, %hiadj(value)\naddi rB, rB, %lo(value)\n```\n Pseudo-instruction movhi is implemented as orhi rB, r0, IMMED."
+  },
+  "movi": {
+    "type": "instruction",
+    "assemblerSyntax": "movi rB, IMMED",
+    "description": "Sign-extends the immediate value IMMED to 32 bits and writes it to rB.",
+    "example": "movi r6, -30",
+    "instruction": "move signed immediate into word",
+    "mnemonic": "movi",
+    "operation": "rB \u2190 \u03c3(IMMED)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "The maximum allowed value of IMMED is 32767. The minimum allowed value is \u201332768. To load a 32-bit constant into a register, refer to the movhi instruction. Pseudo-instruction movi is implemented as addi rB, r0, IMMED."
+  },
+  "movia": {
+    "type": "instruction",
+    "assemblerSyntax": "movia rB, label",
+    "description": "Writes the address of label to rB. Pseudo-instruction movia is implemented as:\n```niosii\norhi rB, r0, %hiadj(label)\naddi rB, rB, %lo(label)",
+    "example": "movia r6, function_address",
+    "instruction": "move immediate address into word",
+    "mnemonic": "movia",
+    "operation": "rB \u2190 label",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "movui": {
+    "type": "instruction",
+    "assemblerSyntax": "movui rB, IMMED",
+    "description": "Zero-extends the immediate value IMMED to 32 bits and writes it to rB.",
+    "example": "movui r6, 100",
+    "instruction": "move unsigned immediate into word",
+    "mnemonic": "movui",
+    "operation": "rB \u2190 (0x0000 : IMMED)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "The maximum allowed value of IMMED is 65535. The minimum allowed value is 0. To load a 32-bit constant into a register, refer to the movhi instruc\u2010 tion. Pseudo-instruction movui is implemented as ori rB, r0, IMMED."
+  },
+  "mul": {
+    "type": "instruction",
+    "assemblerSyntax": "mul rC, rA, rB",
+    "description": "Multiplies rA times rB and stores the 32 low-order bits of the product to rC. The result is the same whether the operands are treated as signed or unsigned integers. Nios II processors that do not implement the mul instruction cause an unimplemented instruction exception.",
+    "example": "mul r6, r7, r8",
+    "exceptions": "Unimplemented instruction",
+    "instruction": "multiply",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "mul",
+    "operation": "rC \u2190 (rA x rB) 31..0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Carry Detection (unsigned operands):\nBefore or after the multiply operation, the carry out of the MSB of rC can be detected using the following instruction sequence:\n```niosii\nmul rC, rA, rB\nmulxuu rD, rA, rB\ncmpne rD, rD, r0\n# The mul operation (optional)\n# rD is nonzero if carry occurred\n# rD is 1 if carry occurred, 0 if not\n```\n The mulxuu instruction writes a nonzero value into rD if the multiplication of unsigned numbers generates a carry (unsigned overflow). If a 0/1 result is desired, follow the mulxuu with the cmpne instruction. Overflow Detection (signed operands):\nAfter the multiply operation, overflow can be detected using the following instruction sequence:\n```niosii\nmul rC, rA, rB\ncmplt rD, rC, r0\nmulxss rE, rA, rB\nadd rD, rD, rE\ncmpne rD, rD, r0\n# The original mul operation\n# rD is nonzero if overflow\n# rD is 1 if overflow, 0 if not\n```\n The cmplt\u2013mulxss\u2013add instruction sequence writes a nonzero value into rD if the product in rC cannot be represented in 32 bits (signed overflow). If a 0/1 result is desired, follow the instruction sequence with the cmpne instruction."
+  },
+  "muli": {
+    "type": "instruction",
+    "assemblerSyntax": "muli rB, rA, IMM16",
+    "description": "Sign-extends the 16-bit immediate value IMM16 to 32 bits and multiplies it by the value of rA. Stores the 32 low-order bits of the product to rB. The result is independent of whether rA is treated as a signed or unsigned number. Nios II processors that do not implement the muli instruction cause an unimplemented instruction exception. Carry Detection and Overflow Detection:\nFor a discussion of carry and overflow detection, refer to the mul instruction.",
+    "example": "muli r6, r7, -100",
+    "exceptions": "Unimplemented instruction",
+    "instruction": "multiply immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "muli",
+    "operation": "rB \u2190 (rA x \u03c3(IMM16)) 31..0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "mulxss": {
+    "type": "instruction",
+    "assemblerSyntax": "mulxss rC, rA, rB",
+    "description": "Treating rA and rB as signed integers, mulxss multiplies rA times rB, and stores the 32 high-order bits of the product to rC. Nios II processors that do not implement the mulxss instruction cause an unimplemented instruction exception.",
+    "example": "mulxss r6, r7, r8",
+    "exceptions": "Unimplemented instruction",
+    "instruction": "multiply extended signed/signed",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "mulxss",
+    "operation": "rC \u2190 ((signed) rA) x ((signed) rB)) 63..32",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use mulxss and mul to compute the full 64-bit product of two 32-bit signed integers. Furthermore, mulxss can be used as part of the calculation of a 128-bit product of two 64-bit signed integers. Given two 64-bit integers, each contained in a pair of 32-bit registers, (S1 : U1) and (S2 : U2), their 128-bit product is (U1 x U2) + ((S1 x U2) << 32) + ((U1 x S2) << 32) + ((S1 x S2) << 64). The mulxss and mul instructions are used to calculate the 64-bit product S1 x S2."
+  },
+  "mulxsu": {
+    "type": "instruction",
+    "assemblerSyntax": "mulxsu rC, rA, rB",
+    "description": "Treating rA as a signed integer and rB as an unsigned integer, mulxsu multiplies rA times rB, and stores the 32 high-order bits of the product to rC. Nios II processors that do not implement the mulxsu instruction cause an unimplemented instruction exception.",
+    "example": "mulxsu r6, r7, r8",
+    "exceptions": "Unimplemented instruction",
+    "instruction": "multiply extended signed/unsigned",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "mulxsu",
+    "operation": "rC \u2190 ((signed) rA) x ((unsigned) rB)) 63..32",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "mulxsu can be used as part of the calculation of a 128-bit product of two 64-bit signed integers. Given two 64-bit integers, each contained in a pair of 32-bit registers, (S1 : U1) and (S2 : U2), their 128-bit product is: (U1 x U2) + ((S1 x U2) << 32) + ((U1 x S2) << 32) + ((S1 x S2) << 64). The mulxsu and mul instructions are used to calculate the two 64-bit products S1 x U2 and U1 x S2."
+  },
+  "mulxuu": {
+    "type": "instruction",
+    "assemblerSyntax": "mulxuu rC, rA, rB",
+    "description": "Treating rA and rB as unsigned integers, mulxuu multiplies rA times rB and stores the 32 high-order bits of the product to rC. Nios II processors that do not implement the mulxuu instruction cause an unimplemented instruction exception.",
+    "example": "mulxuu r6, r7, r8",
+    "exceptions": "Unimplemented instruction",
+    "instruction": "multiply extended unsigned/unsigned",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "mulxuu",
+    "operation": "rC \u2190 ((unsigned) rA) x ((unsigned) rB)) 63..32",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Use mulxuu and mul to compute the 64-bit product of two 32-bit unsigned integers. Furthermore, mulxuu can be used as part of the calculation of a 128-bit product of two 64-bit signed integers. Given two 64-bit signed integers, each contained in a pair of 32-bit registers, (S1 : U1) and (S2 : U2), their 128-bit product is (U1 x U2) + ((S1 x U2) << 32) + ((U1 x S2) << 32) + ((S1 x S2) << 64). The mulxuu and mul instructions are used to calculate the 64-bit product U1 x U2. mulxuu also can be used as part of the calculation of a 128-bit product of two 64-bit unsigned integers. Given two 64-bit unsigned integers, each contained in a pair of 32-bit registers, (T1 : U1) and (T2 : U2), their 128-bit product is (U1 x U2) + ((U1 x T2) << 32) + ((T1 x U2) << 32) + ((T1 x T2) << 64). The mulxuu and mul instructions are used to calculate the four 64-bit products U1 x U2, U1 x T2, T1 x U2, and T1 x T2."
+  },
+  "nextpc": {
+    "type": "instruction",
+    "assemblerSyntax": "nextpc rC",
+    "description": "Stores the address of the next instruction to register rC.",
+    "example": "nextpc r6",
+    "exceptions": "None",
+    "instruction": "get address of following instruction",
+    "instructionFields": "C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "nextpc",
+    "operation": "rC \u2190 PC + 4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "A relocatable code fragment can use nextpc to calculate the address of its data segment. nextpc is the only way to access the PC directly."
+  },
+  "nop": {
+    "type": "instruction",
+    "assemblerSyntax": "nop",
+    "description": "nop does nothing. Pseudo-instruction nop is implemented as add r0, r0, r0.",
+    "example": "nop",
+    "instruction": "no operation",
+    "mnemonic": "nop",
+    "operation": "None",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "nor": {
+    "type": "instruction",
+    "assemblerSyntax": "nor rC, rA, rB",
+    "description": "Calculates the bitwise logical NOR of rA and rB and stores the result in rC.",
+    "example": "nor r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "bitwise logical nor",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "nor",
+    "operation": "rC \u2190 ~(rA | rB)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "or": {
+    "type": "instruction",
+    "assemblerSyntax": "or rC, rA, rB",
+    "description": "Calculates the bitwise logical OR of rA and rB and stores the result in rC.",
+    "example": "or r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "bitwise logical or",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "or",
+    "operation": "rC \u2190 rA | rB",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "orhi": {
+    "type": "instruction",
+    "assemblerSyntax": "orhi rB, rA, IMM16",
+    "description": "Calculates the bitwise logical OR of rA and (IMM16 : 0x0000) and stores the result in rB.",
+    "example": "orhi r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "bitwise logical or immediate into high halfword",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "orhi",
+    "operation": "rB \u2190 rA | (IMM16 : 0x0000)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "ori": {
+    "type": "instruction",
+    "assemblerSyntax": "ori rB, rA, IMM16",
+    "description": "Calculates the bitwise logical OR of rA and (0x0000 : IMM16) and stores the result in rB.",
+    "example": "ori r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "bitwise logical or immediate",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit unsigned immediate value",
+    "instructionType": "I",
+    "mnemonic": "ori",
+    "operation": "rB \u2190 rA | (0x0000 : IMM16)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "rdctl": {
+    "type": "instruction",
+    "assemblerSyntax": "rdctl rC, ctlN",
+    "description": "Reads the value contained in control register ctlN and writes it to register rC.",
+    "example": "rdctl r3, ctl31",
+    "exceptions": "Supervisor-only instruction",
+    "instruction": "read from control register",
+    "instructionFields": "C = Register index of operand rC N = Control register index of operand ctlN",
+    "instructionType": "R",
+    "mnemonic": "rdctl",
+    "operation": "rC \u2190 ctlN",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "rdprs": {
+    "type": "instruction",
+    "assemblerSyntax": "rdprs rB, rA, IMM16",
+    "description": "Sign-extends the 16-bit immediate value IMM16 to 32 bits, and adds it to the value of rA from the previous register set. Places the result in rB in the current register set.",
+    "example": "rdprs r6, r7, 0",
+    "exceptions": "Supervisor-only instruction Illegal instruction",
+    "instruction": "read from previous register set",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value",
+    "instructionType": "I",
+    "mnemonic": "rdprs",
+    "operation": "rB \u2190 prs.rA + \u03c3(IMM16)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "The previous register set is specified by status.PRS. By default, status.PRS indicates the register set in use before an exception, such as an external interrupt, caused a register set change. To read from an arbitrary register set, software can insert the desired register set number in status.PRS prior to executing rdprs. If shadow register sets are not implemented on the Nios II core, rdprs is an illegal instruction."
+  },
+  "ret": {
+    "type": "instruction",
+    "assemblerSyntax": "ret",
+    "description": "Transfers execution to the address in ra.",
+    "example": "ret",
+    "exceptions": "Misaligned destination address",
+    "instruction": "return from subroutine",
+    "instructionFields": "None",
+    "instructionType": "R",
+    "mnemonic": "ret",
+    "operation": "PC \u2190 ra",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Any subroutine called by call or callr must use ret to return."
+  },
+  "rol": {
+    "type": "instruction",
+    "assemblerSyntax": "rol rC, rA, rB",
+    "description": "Rotates rA left by the number of bits specified in rB4..0 and stores the result in rC. The bits that shift out of the register rotate into the least-significant bit positions. Bits 31\u20135 of rB are ignored.",
+    "example": "rol r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "rotate left",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "rol",
+    "operation": "rC \u2190 rA rotated left rB4..0 bit positions",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "roli": {
+    "type": "instruction",
+    "assemblerSyntax": "roli rC, rA, IMM5",
+    "description": "Rotates rA left by the number of bits specified in IMM5 and stores the result in rC. The bits that shift out of the register rotate into the least-significant bit positions.",
+    "example": "roli r6, r7, 3",
+    "exceptions": "None",
+    "instruction": "rotate left immediate",
+    "instructionFields": "A = Register index of operand rA C = Register index of operand rC IMM5 = 5-bit unsigned immediate value",
+    "instructionType": "R",
+    "mnemonic": "roli",
+    "operation": "rC \u2190 rA rotated left IMM5 bit positions",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "In addition to the rotate-left operation, roli can be used to implement a rotate-right operation. Rotating left by (32 \u2013 IMM5) bits is the equivalent of rotating right by IMM5 bits."
+  },
+  "ror": {
+    "type": "instruction",
+    "assemblerSyntax": "ror rC, rA, rB",
+    "description": "Rotates rA right by the number of bits specified in rB4..0 and stores the result in rC. The bits that shift out of the register rotate into the most-significant bit positions. Bits 31\u2013 5 of rB are ignored.",
+    "example": "ror r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "rotate right",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "ror",
+    "operation": "rC \u2190 rA rotated right rB4..0 bit positions",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "sll": {
+    "type": "instruction",
+    "assemblerSyntax": "sll rC, rA, rB",
+    "description": "Shifts rA left by the number of bits specified in rB4..0 (inserting zeroes), and then stores the result in rC. sll performs the << operation of the C program\u2010 ming language.",
+    "example": "sll r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "shift left logical",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "sll",
+    "operation": "rC \u2190 rA << (rB4..0)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "slli": {
+    "type": "instruction",
+    "assemblerSyntax": "slli rC, rA, IMM5",
+    "description": "Shifts rA left by the number of bits specified in IMM5 (inserting zeroes), and then stores the result in rC.",
+    "example": "slli r6, r7, 3",
+    "exceptions": "None",
+    "instruction": "shift left logical immediate",
+    "instructionFields": "A = Register index of operand rA C = Register index of operand rC IMM5 = 5-bit unsigned immediate value",
+    "instructionType": "R",
+    "mnemonic": "slli",
+    "operation": "rC \u2190 rA << IMM5",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "slli performs the << operation of the C program\u2010 ming language."
+  },
+  "sra": {
+    "type": "instruction",
+    "assemblerSyntax": "sra rC, rA, rB",
+    "description": "Shifts rA right by the number of bits specified in rB4..0 (duplicating the sign bit), and then stores the result in rC. Bits 31\u20135 are ignored.",
+    "example": "sra r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "shift right arithmetic",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "sra",
+    "operation": "rC \u2190 (signed) rA >> ((unsigned) rB4..0)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "sra performs the signed >> operation of the C programming language."
+  },
+  "srai": {
+    "type": "instruction",
+    "assemblerSyntax": "srai rC, rA, IMM5",
+    "description": "Shifts rA right by the number of bits specified in IMM5 (duplicating the sign bit), and then stores the result in rC.",
+    "example": "srai r6, r7, 3",
+    "exceptions": "None",
+    "instruction": "shift right arithmetic immediate",
+    "instructionFields": "A = Register index of operand rA C = Register index of operand rC IMM5 = 5-bit unsigned immediate value",
+    "instructionType": "R",
+    "mnemonic": "srai",
+    "operation": "rC \u2190 (signed) rA >> ((unsigned) IMM5)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "srai performs the signed >> operation of the C programming language."
+  },
+  "srl": {
+    "type": "instruction",
+    "assemblerSyntax": "srl rC, rA, rB",
+    "description": "Shifts rA right by the number of bits specified in rB4..0 (inserting zeroes), and then stores the result in rC. Bits 31\u20135 are ignored.",
+    "example": "srl r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "shift right logical",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "srl",
+    "operation": "rC \u2190 (unsigned) rA >> ((unsigned) rB4..0)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "srl performs the unsigned >> operation of the C programming language."
+  },
+  "srli": {
+    "type": "instruction",
+    "assemblerSyntax": "srli rC, rA, IMM5",
+    "description": "Shifts rA right by the number of bits specified in IMM5 (inserting zeroes), and then stores the result in rC.",
+    "example": "srli r6, r7, 3",
+    "exceptions": "None",
+    "instruction": "shift right logical immediate",
+    "instructionFields": "A = Register index of operand rA C = Register index of operand rC IMM5 = 5-bit unsigned immediate value",
+    "instructionType": "R",
+    "mnemonic": "srli",
+    "operation": "rC \u2190 (unsigned) rA >> ((unsigned) IMM5)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "srli performs the unsigned >> operation of the C programming language."
+  },
+  "sth / sthio": {
+    "type": "instruction",
+    "assemblerSyntax": "sth rB, byte_offset(rA)\nsthio rB, byte_offset(rA)",
+    "description": "Computes the effective byte address specified by the sum of rA and the instruction's signed 16-bit immediate value. Stores the low halfword of rB to the memory location specified by the effective byte address. The effective byte address must be halfword aligned. If the byte address is not a multiple of 2, the operation is undefined.",
+    "example": "sth r6, 100(r5)",
+    "exceptions": "Supervisor-only data address Misaligned data address TLB permission violation (write) Fast TLB miss (data) Double TLB miss (data) MPU region violation (data)",
+    "instruction": "store halfword to memory or I/O peripheral",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value Table 21: sth",
+    "instructionType": "I",
+    "mnemonic": "sth / sthio",
+    "operation": "Mem16[rA + \u03c3(IMM16)] \u2190 rB15..0",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "In processors with a data cache, this instruction may not generate an Avalon-MM data transfer immediately. Use the sthio instruction for peripheral I/O. In processors with a data cache, sthio bypasses the cache and is guaranteed to generate an Avalon-MM data transfer. In processors without a data cache, sthio acts like sth."
+  },
+  "stw / stwio": {
+    "type": "instruction",
+    "assemblerSyntax": "stw rB, byte_offset(rA)\nstwio rB, byte_offset(rA)",
+    "description": "Computes the effective byte address specified by the sum of rA and the instruction's signed 16-bit immediate value. Stores rB to the memory location specified by the effective byte address. The effective byte address must be word aligned. If the byte address is not a multiple of 4, the operation is undefined.",
+    "example": "stw r6, 100(r5)",
+    "exceptions": "Supervisor-only data address Misaligned data address TLB permission violation (write) Fast TLB miss (data) Double TLB miss (data) MPU region violation (data)",
+    "instruction": "store word to memory or I/O peripheral",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit signed immediate value Table 23: stw",
+    "instructionType": "I",
+    "mnemonic": "stw / stwio",
+    "operation": "Mem32[rA + \u03c3(IMM16)] \u2190 rB",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "In processors with a data cache, this instruction may not generate an Avalon-MM data transfer immediately. Use the stwio instruction for peripheral I/O. In processors with a data cache, stwio bypasses the cache and is guaranteed to generate an Avalon-MM bus cycle. In processors without a data cache, stwio acts like stw."
+  },
+  "sub": {
+    "type": "instruction",
+    "assemblerSyntax": "sub rC, rA, rB",
+    "description": "Subtract rB from rA and store the result in rC.",
+    "example": "sub r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "subtract",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "sub",
+    "operation": "rC \u2190 rA \u2013 rB",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "Carry Detection (unsigned operands):\nThe carry bit indicates an unsigned overflow. Before or after a sub operation, a carry out of the MSB can be detected by checking whether the first operand is less than the second operand. The carry bit can be written to a register, or a conditional branch can be taken based on the carry condition. Both cases are shown in the following code:\n```niosii\nsub rC, rA, rB\ncmpltu rD, rA, rB\nsub rC, rA, rB\nbltu rA, rB, label\n# The original sub operation (optional)\n# rD is written with the carry bit\n# The original sub operation (optional)\n# Branch if carry generated\n```\n Overflow Detection (signed operands):\nDetect overflow of signed subtraction by comparing the sign of the difference that is written to rC with the signs of the operands. If rA and rB have different signs, and the sign of rC is different than the sign of rA, an overflow occurred. The overflow condition can control a conditional branch, as shown in the following code:\n```niosii\nsub rC, rA, rB\nxor rD, rA, rB\nxor rE, rA, rC\nand rD, rD, rE\nblt rD, r0, label\n# The original sub operation\n# Compare signs of rA and rB\n# Compare signs of rA and rC\n# Combine comparisons\n# Branch if overflow occurred\n```\n"
+  },
+  "subi": {
+    "type": "instruction",
+    "assemblerSyntax": "subi rB, rA, IMMED",
+    "description": "Sign-extends the immediate value IMMED to 32 bits, subtracts it from the value of rA and then stores the result in rB.",
+    "example": "subi r8, r8, 4",
+    "instruction": "subtract immediate",
+    "mnemonic": "subi",
+    "operation": "rB \u2190 rA \u2013 \u03c3(IMMED)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "The maximum allowed value of IMMED is 32768. The minimum allowed value is \u201332767. Pseudo-instruction subi is implemented as addi rB, rA, -IMMED"
+  },
+  "sync": {
+    "type": "instruction",
+    "assemblerSyntax": "sync",
+    "description": "Forces all pending memory accesses to complete before allowing execution of subsequent instruc\u2010 tions. In processor cores that support in-order memory accesses only, this instruction performs no operation.",
+    "example": "sync",
+    "exceptions": "None",
+    "instruction": "memory synchronization",
+    "instructionFields": "None",
+    "instructionType": "R",
+    "mnemonic": "sync",
+    "operation": "None",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "trap": {
+    "type": "instruction",
+    "assemblerSyntax": "trap\ntrap imm5",
+    "description": "Saves the address of the next instruction in register ea, saves the contents of the status register in estatus, disables interrupts, and transfers execution to the exception handler. The address of the exception handler is specified with the Nios_II Processor parameter editor in Qsys. The 5-bit immediate field imm5 is ignored by the processor, but it can be used by the debugger. trap with no argument is the same as trap 0.",
+    "example": "trap",
+    "exceptions": "Trap",
+    "instruction": "trap",
+    "instructionFields": "IMM5 = Type of breakpoint",
+    "instructionType": "R",
+    "mnemonic": "trap",
+    "operation": "estatus \u2190 status PIE \u2190 0 U \u2190 0 ea \u2190 PC + 4 PC \u2190 exception handler address",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "To return from the exception handler, execute an eret instruction."
+  },
+  "wrctl": {
+    "type": "instruction",
+    "assemblerSyntax": "wrctl ctlN, rA",
+    "description": "Writes the value contained in register rA to the control register ctlN.",
+    "example": "wrctl ctl6, r3",
+    "exceptions": "Supervisor-only instruction",
+    "instruction": "write to control register",
+    "instructionFields": "A = Register index of operand rA N = Control register index of operand ctlN",
+    "instructionType": "R",
+    "mnemonic": "wrctl",
+    "operation": "ctlN \u2190 rA",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "wrprs": {
+    "type": "instruction",
+    "assemblerSyntax": "wrprs rC, rA",
+    "description": "Copies the value of rA in the current register set to rC in the previous register set. This instruction can set r0 to 0 in a shadow register set.",
+    "example": "wrprs r6, r7",
+    "exceptions": "Supervisor-only instruction Illegal instruction",
+    "instruction": "write to previous register set",
+    "instructionFields": "A = Register index of operand rA C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "wrprs",
+    "operation": "prs.rC \u2190 rA",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf",
+    "usage": "The previous register set is specified by status.PRS. By default, status.PRS indicates the register set in use before an exception, such as an external interrupt, caused a register set change. To write to an arbitrary register set, software can insert the desired register set number in status.PRS prior to executing wrprs. System software must use wrprs to initialize r0 to 0 in each shadow register set before using that register set. If shadow register sets are not implemented on the Nios II core, wrprs is an illegal instruction."
+  },
+  "xor": {
+    "type": "instruction",
+    "assemblerSyntax": "xor rC, rA, rB",
+    "description": "Calculates the bitwise logical exclusive-or of rA and rB and stores the result in rC.",
+    "example": "xor r6, r7, r8",
+    "exceptions": "None",
+    "instruction": "bitwise logical exclusive or",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB C = Register index of operand rC",
+    "instructionType": "R",
+    "mnemonic": "xor",
+    "operation": "rC \u2190 rA ^ rB",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "xorhi": {
+    "type": "instruction",
+    "assemblerSyntax": "xorhi rB, rA, IMM16",
+    "description": "Calculates the bitwise logical exclusive XOR of rA and (IMM16 : 0x0000) and stores the result in rB.",
+    "example": "xorhi r6, r7, 100",
+    "exceptions": "None",
+    "instruction": "bitwise logical exclusive or immediate into high halfword",
+    "instructionFields": "A = Register index of operand rA B = Register index of operand rB IMM16 = 16-bit unsigned immediate value",
+    "instructionType": "I",
+    "mnemonic": "xorhi",
+    "operation": "rB \u2190 rA ^ (IMM16 : 0x0000)",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii51017.pdf"
+  },
+  "r0 / zero": {
+    "type": "register",
+    "function": "0x00000000",
+    "name": "r0 / zero",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r1 / at": {
+    "type": "register",
+    "function": "Assembler temporary",
+    "name": "r1 / at",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r2": {
+    "type": "register",
+    "function": "Return value",
+    "name": "r2",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r3": {
+    "type": "register",
+    "function": "Return value",
+    "name": "r3",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r4": {
+    "type": "register",
+    "function": "Register arguments",
+    "name": "r4",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r5": {
+    "type": "register",
+    "function": "Register arguments",
+    "name": "r5",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r6": {
+    "type": "register",
+    "function": "Register arguments",
+    "name": "r6",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r7": {
+    "type": "register",
+    "function": "Register arguments",
+    "name": "r7",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r8": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r8",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r9": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r9",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r10": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r10",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r11": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r11",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r12": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r12",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r13": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r13",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r14": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r14",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r15": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r15",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r16": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r16",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r17": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r17",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r18": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r18",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r19": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r19",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r20": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r20",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r21": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r21",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r22": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r22",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r23": {
+    "type": "register",
+    "function": "Caller-saved register",
+    "name": "r23",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r24 / et": {
+    "type": "register",
+    "function": "Exception temporary",
+    "name": "r24 / et",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r25 / bt": {
+    "type": "register",
+    "function": "Breakpoint temporary",
+    "name": "r25 / bt",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r26 / gp": {
+    "type": "register",
+    "function": "Global pointer",
+    "name": "r26 / gp",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r27 / sp": {
+    "type": "register",
+    "function": "Stack pointer",
+    "name": "r27 / sp",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r28 / fp": {
+    "type": "register",
+    "function": "Frame pointer",
+    "name": "r28 / fp",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r29 / ea": {
+    "type": "register",
+    "function": "Exception return address",
+    "name": "r29 / ea",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r30 / sstatus": {
+    "type": "register",
+    "function": "Status register",
+    "name": "r30 / sstatus",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  "r31 / ra": {
+    "type": "register",
+    "function": "Return address",
+    "name": "r31 / ra",
+    "source": "https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/hb/nios2/n2cpu_nii5v1.pdf"
+  },
+  ".abort": {
+    "type": "directive",
+    "description": "This directive stops the assembly immediately. It is for compatibility with other assemblers. The original idea was that the assembly language source would be piped into the assembler. If the sender of the source quit, it could use this directive tells `` as `` to quit also. One day `` .abort `` will not be supported.",
+    "name": ".abort",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Abort.html#Abort",
+    "usage": ".abort"
+  },
+  ".ABORT": {
+    "type": "directive",
+    "description": "When producing COFF output, `` as `` accepts this directive as a synonym for `` .abort ``.\n\nWhen producing `` b.out `` output, `` as `` accepts this directive, but ignores it.",
+    "name": ".ABORT",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/ABORT.html#ABORT",
+    "usage": ".ABORT"
+  },
+  ".align": {
+    "type": "directive",
+    "description": "Pad the location counter (in the current subsection) to a particular storage boundary. The first expression (which must be absolute) is the alignment required, as described below.\n\nThe second expression (also absolute) gives the fill value to be stored in the padding bytes. It (and the comma) may be omitted. If it is omitted, the padding bytes are normally zero. However, on some systems, if the section is marked as containing code and the fill value is omitted, the space is filled with no-op instructions.\n\nThe third expression is also absolute, and is also optional. If it is present, it is the maximum number of bytes that should be skipped by this alignment directive. If doing the alignment would require skipping more bytes than the specified maximum, then the alignment is not done at all. You can omit the fill value (the second argument) entirely by simply using two commas after the required alignment; this can be useful if you want the alignment to be filled with no-op instructions when appropriate.\n\nThe way the required alignment is specified varies from system to system. For the a29k, hppa, m68k, m88k, w65, sparc, and Hitachi SH, and i386 using ELF format, the first expression is the alignment request in bytes. For example `` .align 8 `` advances the location counter until it is a multiple of 8. If the location counter is already a multiple of 8, no change is needed.\n\nFor other systems, including the i386 using a.out format, and the arm and strongarm, it is the number of low-order zero bits the location counter must have after advancement. For example `` .align 3 `` advances the location counter until it a multiple of 8. If the location counter is already a multiple of 8, no change is needed.\n\nThis inconsistency is due to the different behaviors of the various native assemblers for these systems which GAS must emulate. GAS also provides `` .balign `` and `` .p2align `` directives, described later, which have a consistent behavior across all architectures (but are specific to GAS).",
+    "name": ".align",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Align.html#Align",
+    "usage": ".align *abs-expr*, *abs-expr*, *abs-expr*"
+  },
+  ".ascii": {
+    "type": "directive",
+    "description": "`` .ascii `` expects zero or more string literals (see [Strings](https://www.sourceware.org/binutils/docs-2.12/as.info/Strings.html#Strings)) separated by commas. It assembles each string (with no automatic trailing zero byte) into consecutive addresses.",
+    "name": ".ascii",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Ascii.html#Ascii",
+    "usage": ".ascii \"*string*\"..."
+  },
+  ".asciz": {
+    "type": "directive",
+    "description": "`` .asciz `` is just like `` .ascii ``, but each string is followed by a zero byte. The \"z\" in `` .asciz `` stands for \"zero\".",
+    "name": ".asciz",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Asciz.html#Asciz",
+    "usage": ".asciz \"*string*\"..."
+  },
+  ".balign[wl]": {
+    "type": "directive",
+    "description": "Pad the location counter (in the current subsection) to a particular storage boundary. The first expression (which must be absolute) is the alignment request in bytes. For example `` .balign 8 `` advances the location counter until it is a multiple of 8. If the location counter is already a multiple of 8, no change is needed.\n\nThe second expression (also absolute) gives the fill value to be stored in the padding bytes. It (and the comma) may be omitted. If it is omitted, the padding bytes are normally zero. However, on some systems, if the section is marked as containing code and the fill value is omitted, the space is filled with no-op instructions.\n\nThe third expression is also absolute, and is also optional. If it is present, it is the maximum number of bytes that should be skipped by this alignment directive. If doing the alignment would require skipping more bytes than the specified maximum, then the alignment is not done at all. You can omit the fill value (the second argument) entirely by simply using two commas after the required alignment; this can be useful if you want the alignment to be filled with no-op instructions when appropriate.\n\nThe `` .balignw `` and `` .balignl `` directives are variants of the `` .balign `` directive. The `` .balignw `` directive treats the fill pattern as a two byte word value. The `` .balignl `` directives treats the fill pattern as a four byte longword value. For example, `` .balignw 4,0x368d `` will align to a multiple of 4. If it skips two bytes, they will be filled in with the value 0x368d (the exact placement of the bytes depends upon the endianness of the processor). If it skips 1 or 3 bytes, the fill value is undefined.",
+    "name": ".balign[wl]",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Balign.html#Balign",
+    "usage": ".balign[wl] *abs-expr*, *abs-expr*, *abs-expr*"
+  },
+  ".byte": {
+    "type": "directive",
+    "description": "`` .byte `` expects zero or more expressions, separated by commas. Each expression is assembled into the next byte.",
+    "name": ".byte",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Byte.html#Byte",
+    "usage": ".byte *expressions*"
+  },
+  ".comm": {
+    "type": "directive",
+    "description": "`` .comm `` declares a common symbol named *symbol*. When linking, a common symbol in one object file may be merged with a defined or common symbol of the same name in another object file. If `` ld `` does not see a definition for the symbol-just one or more common symbols-then it will allocate *length* bytes of uninitialized memory. *length* must be an absolute expression. If `` ld `` sees multiple common symbols with the same name, and they do not all have the same size, it will allocate space using the largest size.\n\nWhen using ELF, the `` .comm `` directive takes an optional third argument. This is the desired alignment of the symbol, specified as a byte boundary (for example, an alignment of 16 means that the least significant 4 bits of the address should be zero). The alignment must be an absolute expression, and it must be a power of two. If `` ld `` allocates uninitialized memory for the common symbol, it will use the alignment when placing the symbol. If no alignment is specified, `` as `` will set the alignment to the largest power of two less than or equal to the size of the symbol, up to a maximum of 16.\n\nThe syntax for `` .comm `` differs slightly on the HPPA. The syntax is <code>*symbol* .comm, *length*</code>; *symbol* is optional.",
+    "name": ".comm",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Comm.html#Comm",
+    "usage": ".comm *symbol* , *length*"
+  },
+  ".data": {
+    "type": "directive",
+    "description": "`` .data `` tells `` as `` to assemble the following statements onto the end of the data subsection numbered *subsection* (which is an absolute expression). If *subsection* is omitted, it defaults to zero.",
+    "name": ".data",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Data.html#Data",
+    "usage": ".data *subsection*"
+  },
+  ".def": {
+    "type": "directive",
+    "description": "Begin defining debugging information for a symbol *name*; the definition extends until the `` .endef `` directive is encountered.\n\nThis directive is only observed when `` as `` is configured for COFF format output; when producing `` b.out ``, `` .def `` is recognized, but ignored.",
+    "name": ".def",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Def.html#Def",
+    "usage": ".def *name*"
+  },
+  ".desc": {
+    "type": "directive",
+    "description": "This directive sets the descriptor of the symbol (see [Symbol Attributes](https://www.sourceware.org/binutils/docs-2.12/as.info/Symbol-Attributes.html#Symbol%20Attributes)) to the low 16 bits of an absolute expression.\n\nThe `` .desc `` directive is not available when `` as `` is configured for COFF output; it is only for `` a.out `` or `` b.out `` object format. For the sake of compatibility, `` as `` accepts it, but produces no output, when configured for COFF.",
+    "name": ".desc",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Desc.html#Desc",
+    "usage": ".desc *symbol*, *abs-expression*"
+  },
+  ".dim": {
+    "type": "directive",
+    "description": "This directive is generated by compilers to include auxiliary debugging information in the symbol table. It is only permitted inside `` .def ``/`` .endef `` pairs.\n\n`` .dim `` is only meaningful when generating COFF format output; when `` as `` is generating `` b.out ``, it accepts this directive but ignores it.",
+    "name": ".dim",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Dim.html#Dim",
+    "usage": ".dim"
+  },
+  ".double": {
+    "type": "directive",
+    "description": "`` .double `` expects zero or more flonums, separated by commas. It assembles floating point numbers. The exact kind of floating point numbers emitted depends on how `` as `` is configured. See [Machine Dependencies](https://www.sourceware.org/binutils/docs-2.12/as.info/Machine-Dependencies.html#Machine%20Dependencies).",
+    "name": ".double",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Double.html#Double",
+    "usage": ".double *flonums*"
+  },
+  ".eject": {
+    "type": "directive",
+    "description": "Force a page break at this point, when generating assembly listings.",
+    "name": ".eject",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Eject.html#Eject",
+    "usage": ".eject"
+  },
+  ".else": {
+    "type": "directive",
+    "description": "`` .else `` is part of the `` as `` support for conditional assembly; see [`` .if ``](https://www.sourceware.org/binutils/docs-2.12/as.info/If.html#If). It marks the beginning of a section of code to be assembled if the condition for the preceding `` .if `` was false.",
+    "name": ".else",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Else.html#Else",
+    "usage": ".else"
+  },
+  ".elseif": {
+    "type": "directive",
+    "description": "`` .elseif `` is part of the `` as `` support for conditional assembly; see [`` .if ``](https://www.sourceware.org/binutils/docs-2.12/as.info/If.html#If). It is shorthand for beginning a new `` .if `` block that would otherwise fill the entire `` .else `` section.",
+    "name": ".elseif",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Elseif.html#Elseif",
+    "usage": ".elseif"
+  },
+  ".end": {
+    "type": "directive",
+    "description": "`` .end `` marks the end of the assembly file. `` as `` does not process anything in the file past the `` .end `` directive.",
+    "name": ".end",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/End.html#End",
+    "usage": ".end"
+  },
+  ".endef": {
+    "type": "directive",
+    "description": "This directive flags the end of a symbol definition begun with `` .def ``.\n\n`` .endef `` is only meaningful when generating COFF format output; if `` as `` is configured to generate `` b.out ``, it accepts this directive but ignores it.",
+    "name": ".endef",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Endef.html#Endef",
+    "usage": ".endef"
+  },
+  ".endfunc": {
+    "type": "directive",
+    "description": "`` .endfunc `` marks the end of a function specified with `` .func ``.",
+    "name": ".endfunc",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Endfunc.html#Endfunc",
+    "usage": ".endfunc"
+  },
+  ".endif": {
+    "type": "directive",
+    "description": "`` .endif `` is part of the `` as `` support for conditional assembly; it marks the end of a block of code that is only assembled conditionally. See [`` .if ``](https://www.sourceware.org/binutils/docs-2.12/as.info/If.html#If).",
+    "name": ".endif",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Endif.html#Endif",
+    "usage": ".endif"
+  },
+  ".equ": {
+    "type": "directive",
+    "description": "This directive sets the value of *symbol* to *expression*. It is synonymous with `` .set ``; see [`` .set ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Set.html#Set).\n\nThe syntax for `` equ `` on the HPPA is <code>*symbol* .equ *expression*</code>.",
+    "name": ".equ",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Equ.html#Equ",
+    "usage": ".equ *symbol*, *expression*"
+  },
+  ".equiv": {
+    "type": "directive",
+    "description": "The `` .equiv `` directive is like `` .equ `` and `` .set ``, except that the assembler will signal an error if *symbol* is already defined.\n\nExcept for the contents of the error message, this is roughly equivalent to\n\n<pre>.ifdef SYM .err .endif .equ SYM,VAL </pre>",
+    "name": ".equiv",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Equiv.html#Equiv",
+    "usage": ".equiv *symbol*, *expression*"
+  },
+  ".err": {
+    "type": "directive",
+    "description": "If `` as `` assembles a `` .err `` directive, it will print an error message and, unless the `` -Z `` option was used, it will not generate an object file. This can be used to signal error an conditionally compiled code.",
+    "name": ".err",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Err.html#Err",
+    "usage": ".err"
+  },
+  ".exitm": {
+    "type": "directive",
+    "description": "Exit early from the current macro definition. See [Macro](https://www.sourceware.org/binutils/docs-2.12/as.info/Macro.html#Macro).",
+    "name": ".exitm",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Exitm.html#Exitm",
+    "usage": ".exitm"
+  },
+  ".extern": {
+    "type": "directive",
+    "description": "`` .extern `` is accepted in the source program--for compatibility with other assemblers--but it is ignored. `` as `` treats all undefined symbols as external.",
+    "name": ".extern",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Extern.html#Extern",
+    "usage": ".extern"
+  },
+  ".fail": {
+    "type": "directive",
+    "description": "Generates an error or a warning. If the value of the *expression* is 500 or more, `` as `` will print a warning message. If the value is less than 500, `` as `` will print an error message. The message will include the value of *expression*. This can occasionally be useful inside complex nested macros or conditional assembly.",
+    "name": ".fail",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Fail.html#Fail",
+    "usage": ".fail *expression*"
+  },
+  ".file": {
+    "type": "directive",
+    "description": "`` .file `` tells `` as `` that we are about to start a new logical file. *string* is the new file name. In general, the filename is recognized whether or not it is surrounded by quotes `` \" ``; but if you wish to specify an empty file name, you must give the quotes-`` \"\" ``. This statement may go away in future: it is only recognized to be compatible with old `` as `` programs. In some configurations of `` as ``, `` .file `` has already been removed to avoid conflicts with other assemblers. See [Machine Dependencies](https://www.sourceware.org/binutils/docs-2.12/as.info/Machine-Dependencies.html#Machine%20Dependencies).",
+    "name": ".file",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/File.html#File",
+    "usage": ".file *string*"
+  },
+  ".fill": {
+    "type": "directive",
+    "description": "*repeat*, *size* and *value* are absolute expressions. This emits *repeat* copies of *size* bytes. *Repeat* may be zero or more. *Size* may be zero or more, but if it is more than 8, then it is deemed to have the value 8, compatible with other people's assemblers. The contents of each *repeat* bytes is taken from an 8-byte number. The highest order 4 bytes are zero. The lowest order 4 bytes are *value* rendered in the byte-order of an integer on the computer `` as `` is assembling for. Each *size* bytes in a repetition is taken from the lowest order *size* bytes of this number. Again, this bizarre behavior is compatible with other people's assemblers.\n\n*size* and *value* are optional. If the second comma and *value* are absent, *value* is assumed zero. If the first comma and following tokens are absent, *size* is assumed to be 1.",
+    "name": ".fill",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Fill.html#Fill",
+    "usage": ".fill *repeat* , *size* , *value*"
+  },
+  ".float": {
+    "type": "directive",
+    "description": "This directive assembles zero or more flonums, separated by commas. It has the same effect as `` .single ``. The exact kind of floating point numbers emitted depends on how `` as `` is configured. See [Machine Dependencies](https://www.sourceware.org/binutils/docs-2.12/as.info/Machine-Dependencies.html#Machine%20Dependencies).",
+    "name": ".float",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Float.html#Float",
+    "usage": ".float *flonums*"
+  },
+  ".func": {
+    "type": "directive",
+    "description": "`` .func `` emits debugging information to denote function *name*, and is ignored unless the file is assembled with debugging enabled. Only `` --gstabs `` is currently supported. *label* is the entry point of the function and if omitted *name* prepended with the `` leading char `` is used. `` leading char `` is usually `` _ `` or nothing, depending on the target. All functions are currently defined to have `` void `` return type. The function must be terminated with `` .endfunc ``.",
+    "name": ".func",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Func.html#Func",
+    "usage": ".func *name*[,*label*]"
+  },
+  ".global": {
+    "type": "directive",
+    "description": "`` .global `` makes the symbol visible to `` ld ``. If you define *symbol* in your partial program, its value is made available to other partial programs that are linked with it. Otherwise, *symbol* takes its attributes from a symbol of the same name from another file linked into the same program.\n\nBoth spellings (`` .globl `` and `` .global ``) are accepted, for compatibility with other assemblers.\n\nOn the HPPA, `` .global `` is not always enough to make it accessible to other partial programs. You may need the HPPA-only `` .EXPORT `` directive as well. See [HPPA Assembler Directives](https://www.sourceware.org/binutils/docs-2.12/as.info/HPPA-Directives.html#HPPA%20Directives).",
+    "name": ".global",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Global.html#Global",
+    "usage": ".global *symbol*, .globl *symbol*"
+  },
+  ".hidden": {
+    "type": "directive",
+    "description": "This one of the ELF visibility directives. The other two are `` .internal `` (see [`` .internal ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Internal.html#Internal)) and `` .protected `` (see [`` .protected ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Protected.html#Protected)).\n\nThis directive overrides the named symbols default visibility (which is set by their binding: local, global or weak). The directive sets the visibility to `` hidden `` which means that the symbols are not visible to other components. Such symbols are always considered to be `` protected `` as well.",
+    "name": ".hidden",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Hidden.html#Hidden",
+    "usage": ".hidden *names*"
+  },
+  ".hword": {
+    "type": "directive",
+    "description": "This expects zero or more *expressions*, and emits a 16 bit number for each.\n\nThis directive is a synonym for `` .short ``; depending on the target architecture, it may also be a synonym for `` .word ``.",
+    "name": ".hword",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/hword.html#hword",
+    "usage": ".hword *expressions*"
+  },
+  ".ident": {
+    "type": "directive",
+    "description": "This directive is used by some assemblers to place tags in object files. `` as `` simply accepts the directive for source-file compatibility with such assemblers, but does not actually emit anything for it.",
+    "name": ".ident",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Ident.html#Ident",
+    "usage": ".ident"
+  },
+  ".if": {
+    "type": "directive",
+    "description": "`` .if `` marks the beginning of a section of code which is only considered part of the source program being assembled if the argument (which must be an *absolute expression*) is non-zero. The end of the conditional section of code must be marked by `` .endif `` (see [`` .endif ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Endif.html#Endif)); optionally, you may include code for the alternative condition, flagged by `` .else `` (see [`` .else ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Else.html#Else)). If you have several conditions to check, `` .elseif `` may be used to avoid nesting blocks if/else within each subsequent `` .else `` block.\n\nThe following variants of `` .if `` are also supported:\n\n<dl> <dt><code>.ifdef *symbol*</code> <dd>Assembles the following section of code if the specified *symbol* has been defined.  <br/><dt><code>.ifc *string1*,*string2*</code> <dd>Assembles the following section of code if the two strings are the same.  The strings may be optionally quoted with single quotes.  If they are not quoted, the first string stops at the first comma, and the second string stops at the end of the line.  Strings which contain whitespace should be quoted.  The string comparison is case sensitive.  <br/><dt><code>.ifeq *absolute expression*</code> <dd>Assembles the following section of code if the argument is zero.  <br/><dt><code>.ifeqs *string1*,*string2*</code> <dd>Another form of <code>.ifc</code>.  The strings must be quoted using double quotes.  <br/><dt><code>.ifge *absolute expression*</code> <dd>Assembles the following section of code if the argument is greater than or equal to zero.  <br/><dt><code>.ifgt *absolute expression*</code> <dd>Assembles the following section of code if the argument is greater than zero.  <br/><dt><code>.ifle *absolute expression*</code> <dd>Assembles the following section of code if the argument is less than or equal to zero.  <br/><dt><code>.iflt *absolute expression*</code> <dd>Assembles the following section of code if the argument is less than zero.  <br/><dt><code>.ifnc *string1*,*string2*.</code> <dd>Like <code>.ifc</code>, but the sense of the test is reversed: this assembles the following section of code if the two strings are not the same.  <br/><dt><code>.ifndef *symbol*</code> <dt><code>.ifnotdef *symbol*</code> <dd>Assembles the following section of code if the specified *symbol* has not been defined.  Both spelling variants are equivalent.  <br/><dt><code>.ifne *absolute expression*</code> <dd>Assembles the following section of code if the argument is not equal to zero (in other words, this is equivalent to <code>.if</code>).  <br/><dt><code>.ifnes *string1*,*string2*</code> <dd>Like <code>.ifeqs</code>, but the sense of the test is reversed: this assembles the following section of code if the two strings are not the same.  </dd></dt></dd></dt></dd></dt></dt></dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dl>",
+    "name": ".if",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/If.html#If",
+    "usage": ".if *absolute expression*"
+  },
+  ".incbin": {
+    "type": "directive",
+    "description": "The `` incbin `` directive includes *file* verbatim at the current location. You can control the search paths used with the `` -I `` command-line option (see [Command-Line Options](https://www.sourceware.org/binutils/docs-2.12/as.info/Invoking.html#Invoking)). Quotation marks are required around *file*.\n\nThe *skip* argument skips a number of bytes from the start of the *file*. The *count* argument indicates the maximum number of bytes to read. Note that the data is not aligned in any way, so it is the user's responsibility to make sure that proper alignment is provided both before and after the `` incbin `` directive.",
+    "name": ".incbin",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Incbin.html#Incbin",
+    "usage": ".incbin \"*file*\"[,*skip*[,*count*]]"
+  },
+  ".include": {
+    "type": "directive",
+    "description": "This directive provides a way to include supporting files at specified points in your source program. The code from *file* is assembled as if it followed the point of the `` .include ``; when the end of the included file is reached, assembly of the original file continues. You can control the search paths used with the `` -I `` command-line option (see [Command-Line Options](https://www.sourceware.org/binutils/docs-2.12/as.info/Invoking.html#Invoking)). Quotation marks are required around *file*.",
+    "name": ".include",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Include.html#Include",
+    "usage": ".include \"*file*\""
+  },
+  ".int": {
+    "type": "directive",
+    "description": "Expect zero or more *expressions*, of any section, separated by commas. For each expression, emit a number that, at run time, is the value of that expression. The byte order and bit size of the number depends on what kind of target the assembly is for.",
+    "name": ".int",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Int.html#Int",
+    "usage": ".int *expressions*"
+  },
+  ".internal": {
+    "type": "directive",
+    "description": "This one of the ELF visibility directives. The other two are `` .hidden `` (see [`` .hidden ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Hidden.html#Hidden)) and `` .protected `` (see [`` .protected ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Protected.html#Protected)).\n\nThis directive overrides the named symbols default visibility (which is set by their binding: local, global or weak). The directive sets the visibility to `` internal `` which means that the symbols are considered to be `` hidden `` (ie not visible to other components), and that some extra, processor specific processing must also be performed upon the symbols as well.",
+    "name": ".internal",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Internal.html#Internal",
+    "usage": ".internal *names*"
+  },
+  ".irp": {
+    "type": "directive",
+    "description": "Evaluate a sequence of statements assigning different values to *symbol*. The sequence of statements starts at the `` .irp `` directive, and is terminated by an `` .endr `` directive. For each *value*, *symbol* is set to *value*, and the sequence of statements is assembled. If no *value* is listed, the sequence of statements is assembled once, with *symbol* set to the null string. To refer to *symbol* within the sequence of statements, use *\\\\symbol*.\n\nFor example, assembling\n\n<pre>        .irp    param,1,2,3         move    d\\param,sp@-         .endr </pre>\n\n\n\nis equivalent to assembling\n\n<pre>        move    d1,sp@-         move    d2,sp@-         move    d3,sp@- </pre>",
+    "name": ".irp",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Irp.html#Irp",
+    "usage": ".irp *symbol*,*values*..."
+  },
+  ".irpc": {
+    "type": "directive",
+    "description": "Evaluate a sequence of statements assigning different values to *symbol*. The sequence of statements starts at the `` .irpc `` directive, and is terminated by an `` .endr `` directive. For each character in *value*, *symbol* is set to the character, and the sequence of statements is assembled. If no *value* is listed, the sequence of statements is assembled once, with *symbol* set to the null string. To refer to *symbol* within the sequence of statements, use *\\\\symbol*.\n\nFor example, assembling\n\n<pre>        .irpc    param,123         move    d\\param,sp@-         .endr </pre>\n\n\n\nis equivalent to assembling\n\n<pre>        move    d1,sp@-         move    d2,sp@-         move    d3,sp@- </pre>",
+    "name": ".irpc",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Irpc.html#Irpc",
+    "usage": ".irpc *symbol*,*values*..."
+  },
+  ".lcomm": {
+    "type": "directive",
+    "description": "Reserve *length* (an absolute expression) bytes for a local common denoted by *symbol*. The section and value of *symbol* are those of the new local common. The addresses are allocated in the bss section, so that at run-time the bytes start off zeroed. *Symbol* is not declared global (see [`` .global ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Global.html#Global)), so is normally not visible to `` ld ``.\n\nSome targets permit a third argument to be used with `` .lcomm ``. This argument specifies the desired alignment of the symbol in the bss section.\n\nThe syntax for `` .lcomm `` differs slightly on the HPPA. The syntax is <code>*symbol* .lcomm, *length*</code>; *symbol* is optional.",
+    "name": ".lcomm",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Lcomm.html#Lcomm",
+    "usage": ".lcomm *symbol* , *length*"
+  },
+  ".lflags": {
+    "type": "directive",
+    "description": "`` as `` accepts this directive, for compatibility with other assemblers, but ignores it.",
+    "name": ".lflags",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Lflags.html#Lflags",
+    "usage": ".lflags"
+  },
+  ".line": {
+    "type": "directive",
+    "description": "Change the logical line number. *line-number* must be an absolute expression. The next line has that logical line number. Therefore any other statements on the current line (after a statement separator character) are reported as on logical line number *line-number* - 1. One day `` as `` will no longer support this directive: it is recognized only for compatibility with existing assembler programs.\n\n_Warning:_ In the AMD29K configuration of as, this command is not available; use the synonym `` .ln `` in that context.\n\nEven though this is a directive associated with the `` a.out `` or `` b.out `` object-code formats, `` as `` still recognizes it when producing COFF output, and treats `` .line `` as though it were the COFF `` .ln `` _if_ it is found outside a `` .def ``/`` .endef `` pair.\n\nInside a `` .def ``, `` .line `` is, instead, one of the directives used by compilers to generate auxiliary symbol information for debugging.",
+    "name": ".line",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Line.html#Line",
+    "usage": ".line *line-number*"
+  },
+  ".ln": {
+    "type": "directive",
+    "description": "`` .ln `` is a synonym for `` .line ``.",
+    "name": ".ln",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Ln.html#Ln",
+    "usage": ".ln *line-number*"
+  },
+  ".linkonce": {
+    "type": "directive",
+    "description": "Mark the current section so that the linker only includes a single copy of it. This may be used to include the same section in several different object files, but ensure that the linker will only include it once in the final output file. The `` .linkonce `` pseudo-op must be used for each instance of the section. Duplicate sections are detected based on the section name, so it should be unique.\n\nThis directive is only supported by a few object file formats; as of this writing, the only object file format which supports it is the Portable Executable format used on Windows NT.\n\nThe *type* argument is optional. If specified, it must be one of the following strings. For example:\n\n<pre>.linkonce same_size </pre>\n\nNot all types may be supported on all object file formats.\n\n<dl> <dt><code>discard</code> <dd>Silently discard duplicate sections.  This is the default.  <br/><dt><code>one_only</code> <dd>Warn if there are duplicate sections, but still keep only one copy.  <br/><dt><code>same_size</code> <dd>Warn if any of the duplicates have different sizes.  <br/><dt><code>same_contents</code> <dd>Warn if any of the duplicates do not have exactly the same contents.  </dd></dt></dd></dt></dd></dt></dd></dt></dl>",
+    "name": ".linkonce",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Linkonce.html#Linkonce",
+    "usage": ".linkonce [*type*]"
+  },
+  ".list": {
+    "type": "directive",
+    "description": "Control (in conjunction with the `` .nolist `` directive) whether or not assembly listings are generated. These two directives maintain an internal counter (which is zero initially). `` .list `` increments the counter, and `` .nolist `` decrements it. Assembly listings are generated whenever the counter is greater than zero.\n\nBy default, listings are disabled. When you enable them (with the `` -a `` command line option; see [Command-Line Options](https://www.sourceware.org/binutils/docs-2.12/as.info/Invoking.html#Invoking)), the initial value of the listing counter is one.",
+    "name": ".list",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/List.html#List",
+    "usage": ".list"
+  },
+  ".long": {
+    "type": "directive",
+    "description": "`` .long `` is the same as `` .int ``, see [`` .int ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Int.html#Int).",
+    "name": ".long",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Long.html#Long",
+    "usage": ".long *expressions*"
+  },
+  ".macro": {
+    "type": "directive",
+    "description": "The commands `` .macro `` and `` .endm `` allow you to define macros that generate assembly output. For example, this definition specifies a macro `` sum `` that puts a sequence of numbers into memory:\n\n<pre>        .macro  sum from=0, to=5         .long   \\from         .if     \\to-\\from         sum     \"(\\from+1)\",\\to         .endif         .endm </pre>\n\n\n\nWith that definition, `` SUM 0,5 `` is equivalent to this assembly input:\n\n<pre>        .long   0         .long   1         .long   2         .long   3         .long   4         .long   5 </pre>\n\n\n\n<dl> <dt><code>.macro *macname*</code> <dt><code>.macro *macname* *macargs* <small>...</small></code> <dd>Begin the definition of a macro called *macname*.  If your macro definition requires arguments, specify their names after the macro name, separated by commas or spaces.  You can supply a default value for any macro argument by following the name with <code>=*deflt*</code>.  For example, these are all valid <code>.macro</code> statements:  <dl> <dt><code>.macro comm</code> <dd>Begin the definition of a macro called <code>comm</code>, which takes no arguments.  <br/><dt><code>.macro plus1 p, p1</code> <dt><code>.macro plus1 p p1</code> <dd>Either statement begins the definition of a macro called <code>plus1</code>, which takes two arguments; within the macro definition, write <code>\\p</code> or <code>\\p1</code> to evaluate the arguments.  <br/><dt><code>.macro reserve_str p1=0 p2</code> <dd>Begin the definition of a macro called <code>reserve_str</code>, with two arguments.  The first argument has a default value, but not the second.  After the definition is complete, you can call the macro either as <code>reserve_str *a*,*b*</code> (with <code>\\p1</code> evaluating to *a* and <code>\\p2</code> evaluating to *b*), or as <code>reserve_str ,*b*</code> (with <code>\\p1</code> evaluating as the default, in this case <code>0</code>, and <code>\\p2</code> evaluating to *b*).  </dd></dt></dd></dt></dt></dd></dt></dl> <p>When you call a macro, you can specify the argument values either by position, or by keyword.  For example, <code>sum 9,17</code> is equivalent to <code>sum to=17, from=9</code>.  <br/><dt><code>.endm</code> <dd>Mark the end of a macro definition.  <br/><dt><code>.exitm</code> <dd>Exit early from the current macro definition.  <br/><dt><code>\\@</code> <dd><code>as</code> maintains a counter of how many macros it has executed in this pseudo-variable; you can copy that number to your output with <code>\\@</code>, but <em>only within a macro definition</em>.  </dd></dt></dd></dt></dd></dt></p></dd></dt></dt></dl>",
+    "name": ".macro",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Macro.html#Macro",
+    "usage": ".macro"
+  },
+  ".mri": {
+    "type": "directive",
+    "description": "If *val* is non-zero, this tells `` as `` to enter MRI mode. If *val* is zero, this tells `` as `` to exit MRI mode. This change affects code assembled until the next `` .mri `` directive, or until the end of the file. See [MRI mode](https://www.sourceware.org/binutils/docs-2.12/as.info/M.html#M).",
+    "name": ".mri",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/MRI.html#MRI",
+    "usage": ".mri *val*"
+  },
+  ".nolist": {
+    "type": "directive",
+    "description": "Control (in conjunction with the `` .list `` directive) whether or not assembly listings are generated. These two directives maintain an internal counter (which is zero initially). `` .list `` increments the counter, and `` .nolist `` decrements it. Assembly listings are generated whenever the counter is greater than zero.",
+    "name": ".nolist",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Nolist.html#Nolist",
+    "usage": ".nolist"
+  },
+  ".octa": {
+    "type": "directive",
+    "description": "This directive expects zero or more bignums, separated by commas. For each bignum, it emits a 16-byte integer.\n\nThe term \"octa\" comes from contexts in which a \"word\" is two bytes; hence _octa_-word for 16 bytes.",
+    "name": ".octa",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Octa.html#Octa",
+    "usage": ".octa *bignums*"
+  },
+  ".org": {
+    "type": "directive",
+    "description": "Advance the location counter of the current section to *new-lc*. *new-lc* is either an absolute expression or an expression with the same section as the current subsection. That is, you can't use `` .org `` to cross sections: if *new-lc* has the wrong section, the `` .org `` directive is ignored. To be compatible with former assemblers, if the section of *new-lc* is absolute, `` as `` issues a warning, then pretends the section of *new-lc* is the same as the current subsection.\n\n`` .org `` may only increase the location counter, or leave it unchanged; you cannot use `` .org `` to move the location counter backwards.\n\nBecause `` as `` tries to assemble programs in one pass, *new-lc* may not be undefined. If you really detest this restriction we eagerly await a chance to share your improved assembler.\n\nBeware that the origin is relative to the start of the section, not to the start of the subsection. This is compatible with other people's assemblers.\n\nWhen the location counter (of the current subsection) is advanced, the intervening bytes are filled with *fill* which should be an absolute expression. If the comma and *fill* are omitted, *fill* defaults to zero.",
+    "name": ".org",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Org.html#Org",
+    "usage": ".org *new-lc* , *fill*"
+  },
+  ".p2align[wl]": {
+    "type": "directive",
+    "description": "Pad the location counter (in the current subsection) to a particular storage boundary. The first expression (which must be absolute) is the number of low-order zero bits the location counter must have after advancement. For example `` .p2align 3 `` advances the location counter until it a multiple of 8. If the location counter is already a multiple of 8, no change is needed.\n\nThe second expression (also absolute) gives the fill value to be stored in the padding bytes. It (and the comma) may be omitted. If it is omitted, the padding bytes are normally zero. However, on some systems, if the section is marked as containing code and the fill value is omitted, the space is filled with no-op instructions.\n\nThe third expression is also absolute, and is also optional. If it is present, it is the maximum number of bytes that should be skipped by this alignment directive. If doing the alignment would require skipping more bytes than the specified maximum, then the alignment is not done at all. You can omit the fill value (the second argument) entirely by simply using two commas after the required alignment; this can be useful if you want the alignment to be filled with no-op instructions when appropriate.\n\nThe `` .p2alignw `` and `` .p2alignl `` directives are variants of the `` .p2align `` directive. The `` .p2alignw `` directive treats the fill pattern as a two byte word value. The `` .p2alignl `` directives treats the fill pattern as a four byte longword value. For example, `` .p2alignw 2,0x368d `` will align to a multiple of 4. If it skips two bytes, they will be filled in with the value 0x368d (the exact placement of the bytes depends upon the endianness of the processor). If it skips 1 or 3 bytes, the fill value is undefined.",
+    "name": ".p2align[wl]",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/P2align.html#P2align",
+    "usage": ".p2align[wl] *abs-expr*, *abs-expr*, *abs-expr*"
+  },
+  ".popsection": {
+    "type": "directive",
+    "description": "This is one of the ELF section stack manipulation directives. The others are `` .section `` (see [Section](https://www.sourceware.org/binutils/docs-2.12/as.info/Section.html#Section)), `` .subsection `` (see [SubSection](https://www.sourceware.org/binutils/docs-2.12/as.info/SubSection.html#SubSection)), `` .pushsection `` (see [PushSection](https://www.sourceware.org/binutils/docs-2.12/as.info/PushSection.html#PushSection)), and `` .previous `` (see [Previous](https://www.sourceware.org/binutils/docs-2.12/as.info/Previous.html#Previous)).\n\nThis directive replaces the current section (and subsection) with the top section (and subsection) on the section stack. This section is popped off the stack.",
+    "name": ".popsection",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/PopSection.html#PopSection",
+    "usage": ".popsection"
+  },
+  ".previous": {
+    "type": "directive",
+    "description": "This is one of the ELF section stack manipulation directives. The others are `` .section `` (see [Section](https://www.sourceware.org/binutils/docs-2.12/as.info/Section.html#Section)), `` .subsection `` (see [SubSection](https://www.sourceware.org/binutils/docs-2.12/as.info/SubSection.html#SubSection)), `` .pushsection `` (see [PushSection](https://www.sourceware.org/binutils/docs-2.12/as.info/PushSection.html#PushSection)), and `` .popsection `` (see [PopSection](https://www.sourceware.org/binutils/docs-2.12/as.info/PopSection.html#PopSection)).\n\nThis directive swaps the current section (and subsection) with most recently referenced section (and subsection) prior to this one. Multiple `` .previous `` directives in a row will flip between two sections (and their subsections).\n\nIn terms of the section stack, this directive swaps the current section with the top section on the section stack.",
+    "name": ".previous",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Previous.html#Previous",
+    "usage": ".previous"
+  },
+  ".print": {
+    "type": "directive",
+    "description": "`` as `` will print *string* on the standard output during assembly. You must put *string* in double quotes.",
+    "name": ".print",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Print.html#Print",
+    "usage": ".print *string*"
+  },
+  ".protected": {
+    "type": "directive",
+    "description": "This one of the ELF visibility directives. The other two are `` .hidden `` (see [Hidden](https://www.sourceware.org/binutils/docs-2.12/as.info/Hidden.html#Hidden)) and `` .internal `` (see [Internal](https://www.sourceware.org/binutils/docs-2.12/as.info/Internal.html#Internal)).\n\nThis directive overrides the named symbols default visibility (which is set by their binding: local, global or weak). The directive sets the visibility to `` protected `` which means that any references to the symbols from within the components that defines them must be resolved to the definition in that component, even if a definition in another component would normally preempt this.",
+    "name": ".protected",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Protected.html#Protected",
+    "usage": ".protected *names*"
+  },
+  ".psize": {
+    "type": "directive",
+    "description": "Use this directive to declare the number of lines--and, optionally, the number of columns--to use for each page, when generating listings.\n\nIf you do not use `` .psize ``, listings use a default line-count of 60. You may omit the comma and *columns* specification; the default width is 200 columns.\n\n`` as `` generates formfeeds whenever the specified number of lines is exceeded (or whenever you explicitly request one, using `` .eject ``).\n\nIf you specify *lines* as `` 0 ``, no formfeeds are generated save those explicitly specified with `` .eject ``.",
+    "name": ".psize",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Psize.html#Psize",
+    "usage": ".psize *lines* , *columns*"
+  },
+  ".purgem": {
+    "type": "directive",
+    "description": "Undefine the macro *name*, so that later uses of the string will not be expanded. See [Macro](https://www.sourceware.org/binutils/docs-2.12/as.info/Macro.html#Macro).",
+    "name": ".purgem",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Purgem.html#Purgem",
+    "usage": ".purgem *name*"
+  },
+  ".pushsection": {
+    "type": "directive",
+    "description": "This is one of the ELF section stack manipulation directives. The others are `` .section `` (see [Section](https://www.sourceware.org/binutils/docs-2.12/as.info/Section.html#Section)), `` .subsection `` (see [SubSection](https://www.sourceware.org/binutils/docs-2.12/as.info/SubSection.html#SubSection)), `` .popsection `` (see [PopSection](https://www.sourceware.org/binutils/docs-2.12/as.info/PopSection.html#PopSection)), and `` .previous `` (see [Previous](https://www.sourceware.org/binutils/docs-2.12/as.info/Previous.html#Previous)).\n\nThis directive is a synonym for `` .section ``. It pushes the current section (and subsection) onto the top of the section stack, and then replaces the current section and subsection with `` name `` and `` subsection ``.",
+    "name": ".pushsection",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/PushSection.html#PushSection",
+    "usage": ".pushsection *name* , *subsection*"
+  },
+  ".quad": {
+    "type": "directive",
+    "description": "`` .quad `` expects zero or more bignums, separated by commas. For each bignum, it emits an 8-byte integer. If the bignum won't fit in 8 bytes, it prints a warning message; and just takes the lowest order 8 bytes of the bignum.\n\nThe term \"quad\" comes from contexts in which a \"word\" is two bytes; hence _quad_-word for 8 bytes.",
+    "name": ".quad",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Quad.html#Quad",
+    "usage": ".quad *bignums*"
+  },
+  ".rept": {
+    "type": "directive",
+    "description": "Repeat the sequence of lines between the `` .rept `` directive and the next `` .endr `` directive *count* times.\n\nFor example, assembling\n\n<pre>        .rept   3         .long   0         .endr </pre>\n\n\n\nis equivalent to assembling\n\n<pre>        .long   0         .long   0         .long   0 </pre>",
+    "name": ".rept",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Rept.html#Rept",
+    "usage": ".rept *count*"
+  },
+  ".sbttl": {
+    "type": "directive",
+    "description": "Use *subheading* as the title (third line, immediately after the title line) when generating assembly listings.\n\nThis directive affects subsequent pages, as well as the current page if it appears within ten lines of the top of a page.",
+    "name": ".sbttl",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Sbttl.html#Sbttl",
+    "usage": ".sbttl \"*subheading*\""
+  },
+  ".scl": {
+    "type": "directive",
+    "description": "Set the storage-class value for a symbol. This directive may only be used inside a `` .def ``/`` .endef `` pair. Storage class may flag whether a symbol is static or external, or it may record further symbolic debugging information.\n\nThe `` .scl `` directive is primarily associated with COFF output; when configured to generate `` b.out `` output format, `` as `` accepts this directive but ignores it.",
+    "name": ".scl",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Scl.html#Scl",
+    "usage": ".scl *class*"
+  },
+  ".section": {
+    "type": "directive",
+    "description": "Use the `` .section `` directive to assemble the following code into a section named *name*.\n\nThis directive is only supported for targets that actually support arbitrarily named sections; on `` a.out `` targets, for example, it is not accepted, even with a standard `` a.out `` section name.\n\nFor COFF targets, the `` .section `` directive is used in one of the following ways:\n\n<pre>.section *name*[, \"*flags*\"] .section *name*[, *subsegment*] </pre>\n\n\n\nIf the optional argument is quoted, it is taken as flags to use for the section. Each flag is a single character. The following flags are recognized:\n\n<dl> <dt><code>b</code> <dd>bss section (uninitialized data) <br/><dt><code>n</code> <dd>section is not loaded <br/><dt><code>w</code> <dd>writable section <br/><dt><code>d</code> <dd>data section <br/><dt><code>r</code> <dd>read-only section <br/><dt><code>x</code> <dd>executable section <br/><dt><code>s</code> <dd>shared section (meaningful for PE targets) </dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dl>\n\n\n\nIf no flags are specified, the default flags depend upon the section name. If the section name is not recognized, the default will be for the section to be loaded and writable. Note the `` n `` and `` w `` flags remove attributes from the section, rather than adding them, so if they are used on their own it will be as if no flags had been specified at all.\n\nIf the optional argument to the `` .section `` directive is not quoted, it is taken as a subsegment number (see [Sub-Sections](https://www.sourceware.org/binutils/docs-2.12/as.info/Sub-Sections.html#Sub-Sections)).\n\n### <code>.section *name*</code> (ELF version)\n\n\n\nThis is one of the ELF section stack manipulation directives. The others are `` .subsection `` (see [SubSection](https://www.sourceware.org/binutils/docs-2.12/as.info/SubSection.html#SubSection)), `` .pushsection `` (see [PushSection](https://www.sourceware.org/binutils/docs-2.12/as.info/PushSection.html#PushSection)), `` .popsection `` (see [PopSection](https://www.sourceware.org/binutils/docs-2.12/as.info/PopSection.html#PopSection)), and `` .previous `` (see [Previous](https://www.sourceware.org/binutils/docs-2.12/as.info/Previous.html#Previous)).\n\nFor ELF targets, the `` .section `` directive is used like this:\n\n<pre>.section *name* [, \"*flags*\"[, @*type*[, @*entsize*]]] </pre>\n\n\n\nThe optional *flags* argument is a quoted string which may contain any combination of the following characters:\n\n<dl> <dt><code>a</code> <dd>section is allocatable <br/><dt><code>w</code> <dd>section is writable <br/><dt><code>x</code> <dd>section is executable <br/><dt><code>M</code> <dd>section is mergeable <br/><dt><code>S</code> <dd>section contains zero terminated strings </dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dl>\n\n\n\nThe optional *type* argument may contain one of the following constants:\n\n<dl> <dt><code>@progbits</code> <dd>section contains data <br/><dt><code>@nobits</code> <dd>section does not contain data (i.e., section only occupies space) </dd></dt></dd></dt></dl>\n\n\n\nIf *flags* contains `` M `` flag, *type* argument must be specified as well as *entsize* argument. Sections with `` M `` flag but not `` S `` flag must contain fixed size constants, each *entsize* octets long. Sections with both `` M `` and `` S `` must contain zero terminated strings where each character is *entsize* bytes long. The linker may remove duplicates within sections with the same name, same entity size and same flags.\n\nIf no flags are specified, the default flags depend upon the section name. If the section name is not recognized, the default will be for the section to have none of the above flags: it will not be allocated in memory, nor writable, nor executable. The section will contain data.\n\nFor ELF targets, the assembler supports another type of `` .section `` directive for compatibility with the Solaris assembler:\n\n<pre>.section \"*name*\"[, *flags*...] </pre>\n\n\n\nNote that the section name is quoted. There may be a sequence of comma separated flags:\n\n<dl> <dt><code>#alloc</code> <dd>section is allocatable <br/><dt><code>#write</code> <dd>section is writable <br/><dt><code>#execinstr</code> <dd>section is executable </dd></dt></dd></dt></dd></dt></dl>\n\n\n\nThis directive replaces the current section and subsection. The replaced section and subsection are pushed onto the section stack. See the contents of the gas testsuite directory `` gas/testsuite/gas/elf `` for some examples of how this directive and the other section stack directives work.",
+    "name": ".section",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Section.html#Section",
+    "usage": ".section *name* (COFF version)"
+  },
+  ".set": {
+    "type": "directive",
+    "description": "Set the value of *symbol* to *expression*. This changes *symbol*'s value and type to conform to *expression*. If *symbol* was flagged as external, it remains flagged (see [Symbol Attributes](https://www.sourceware.org/binutils/docs-2.12/as.info/Symbol-Attributes.html#Symbol%20Attributes)).\n\nYou may `` .set `` a symbol many times in the same assembly.\n\nIf you `` .set `` a global symbol, the value stored in the object file is the last value stored into it.\n\nThe syntax for `` set `` on the HPPA is <code>*symbol* .set *expression*</code>.",
+    "name": ".set",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Set.html#Set",
+    "usage": ".set *symbol*, *expression*"
+  },
+  ".short": {
+    "type": "directive",
+    "description": "`` .short `` is normally the same as `` .word ``. See [`` .word ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Word.html#Word).\n\nIn some configurations, however, `` .short `` and `` .word `` generate numbers of different lengths; see [Machine Dependencies](https://www.sourceware.org/binutils/docs-2.12/as.info/Machine-Dependencies.html#Machine%20Dependencies).",
+    "name": ".short",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Short.html#Short",
+    "usage": ".short *expressions*"
+  },
+  ".single": {
+    "type": "directive",
+    "description": "This directive assembles zero or more flonums, separated by commas. It has the same effect as `` .float ``. The exact kind of floating point numbers emitted depends on how `` as `` is configured. See [Machine Dependencies](https://www.sourceware.org/binutils/docs-2.12/as.info/Machine-Dependencies.html#Machine%20Dependencies).",
+    "name": ".single",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Single.html#Single",
+    "usage": ".single *flonums*"
+  },
+  ".size": {
+    "type": "directive",
+    "description": "This directive is generated by compilers to include auxiliary debugging information in the symbol table. It is only permitted inside `` .def ``/`` .endef `` pairs.\n\n`` .size `` is only meaningful when generating COFF format output; when `` as `` is generating `` b.out ``, it accepts this directive but ignores it.\n\n### <code>.size *name* , *expression*</code> (ELF version)\n\n\n\nThis directive is used to set the size associated with a symbol *name*. The size in bytes is computed from *expression* which can make use of label arithmetic. This directive is typically used to set the size of function symbols.",
+    "name": ".size",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Size.html#Size",
+    "usage": ".size (COFF version)"
+  },
+  ".skip": {
+    "type": "directive",
+    "description": "This directive emits *size* bytes, each of value *fill*. Both *size* and *fill* are absolute expressions. If the comma and *fill* are omitted, *fill* is assumed to be zero. This is the same as `` .space ``.",
+    "name": ".skip",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Skip.html#Skip",
+    "usage": ".skip *size* , *fill*"
+  },
+  ".sleb128": {
+    "type": "directive",
+    "description": "*sleb128* stands for \"signed little endian base 128.\" This is a compact, variable length representation of numbers used by the DWARF symbolic debugging format. See [`` .uleb128 ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Uleb128.html#Uleb128).",
+    "name": ".sleb128",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Sleb128.html#Sleb128",
+    "usage": ".sleb128 *expressions*"
+  },
+  ".space": {
+    "type": "directive",
+    "description": "This directive emits *size* bytes, each of value *fill*. Both *size* and *fill* are absolute expressions. If the comma and *fill* are omitted, *fill* is assumed to be zero. This is the same as `` .skip ``. >   _Warning:_ `` .space `` has a completely different meaning for HPPA targets; use `` .block `` as a substitute. See <cite>HP9000 Series 800 Assembly Language Reference Manual</cite> (HP 92432-90001) for the meaning of the `` .space `` directive. See [HPPA Assembler Directives](https://www.sourceware.org/binutils/docs-2.12/as.info/HPPA-Directives.html#HPPA%20Directives), for a summary.\n\nOn the AMD 29K, this directive is ignored; it is accepted for compatibility with other AMD 29K assemblers. >   _Warning:_ In most versions of the <small>GNU</small> assembler, the directive `` .space `` has the effect of `` .block `` See [Machine Dependencies](https://www.sourceware.org/binutils/docs-2.12/as.info/Machine-Dependencies.html#Machine%20Dependencies).",
+    "name": ".space",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Space.html#Space",
+    "usage": ".space *size* , *fill*"
+  },
+  ".stabd,": {
+    "type": "directive",
+    "description": "There are three directives that begin `` .stab ``. All emit symbols (see [Symbols](https://www.sourceware.org/binutils/docs-2.12/as.info/Symbols.html#Symbols)), for use by symbolic debuggers. The symbols are not entered in the `` as `` hash table: they cannot be referenced elsewhere in the source file. Up to five fields are required:\n\n<dl> <dt>*string* <dd>This is the symbol's name.  It may contain any character except <code>\\000</code>, so is more general than ordinary symbol names.  Some debuggers used to code arbitrarily complex structures into symbol names using this field.  <br/><dt>*type* <dd>An absolute expression.  The symbol's type is set to the low 8 bits of this expression.  Any bit pattern is permitted, but <code>ld</code> and debuggers choke on silly bit patterns.  <br/><dt>*other* <dd>An absolute expression.  The symbol's \"other\" attribute is set to the low 8 bits of this expression.  <br/><dt>*desc* <dd>An absolute expression.  The symbol's descriptor is set to the low 16 bits of this expression.  <br/><dt>*value* <dd>An absolute expression which becomes the symbol's value.  </dd></dt></dd></dt></dd></dt></dd></dt></dd></dt></dl>\n\n\n\nIf a warning is detected while reading a `` .stabd ``, `` .stabn ``, or `` .stabs `` statement, the symbol has probably already been created; you get a half-formed symbol in your object file. This is compatible with earlier assemblers!\n\n<dl> <dt><code>.stabd *type* , *other* , *desc*</code> <dd> The \"name\" of the symbol generated is not even an empty string.  It is a null pointer, for compatibility.  Older assemblers used a null pointer so they didn't waste space in object files with empty strings.  <p>The symbol's value is set to the location counter, relocatably.  When your program is linked, the value of this symbol is the address of the location counter when the <code>.stabd</code> was assembled.  <br/><dt><code>.stabn *type* , *other* , *desc* , *value*</code> <dd>The name of the symbol is set to the empty string <code>\"\"</code>.  <br/><dt><code>.stabs *string* ,  *type* , *other* , *desc* , *value*</code> <dd>All five fields are specified.  </dd></dt></dd></dt></p></dd></dt></dl>",
+    "name": ".stabd,",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Stab.html#Stab",
+    "usage": ".stabd, .stabn, .stabs"
+  },
+  ".string": {
+    "type": "directive",
+    "description": "Copy the characters in *str* to the object file. You may specify more than one string to copy, separated by commas. Unless otherwise specified for a particular machine, the assembler marks the end of each string with a 0 byte. You can use any of the escape sequences described in [Strings](https://www.sourceware.org/binutils/docs-2.12/as.info/Strings.html#Strings).",
+    "name": ".string",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/String.html#String",
+    "usage": ".string \"*str*\""
+  },
+  ".struct": {
+    "type": "directive",
+    "description": "Switch to the absolute section, and set the section offset to *expression*, which must be an absolute expression. You might use this as follows:\n\n<pre>        .struct 0 field1:         .struct field1 + 4 field2:         .struct field2 + 4 field3: </pre>\n\nThis would define the symbol `` field1 `` to have the value 0, the symbol `` field2 `` to have the value 4, and the symbol `` field3 `` to have the value 8. Assembly would be left in the absolute section, and you would need to use a `` .section `` directive of some sort to change to some other section before further assembly.",
+    "name": ".struct",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Struct.html#Struct",
+    "usage": ".struct *expression*"
+  },
+  ".subsection": {
+    "type": "directive",
+    "description": "This is one of the ELF section stack manipulation directives. The others are `` .section `` (see [Section](https://www.sourceware.org/binutils/docs-2.12/as.info/Section.html#Section)), `` .pushsection `` (see [PushSection](https://www.sourceware.org/binutils/docs-2.12/as.info/PushSection.html#PushSection)), `` .popsection `` (see [PopSection](https://www.sourceware.org/binutils/docs-2.12/as.info/PopSection.html#PopSection)), and `` .previous `` (see [Previous](https://www.sourceware.org/binutils/docs-2.12/as.info/Previous.html#Previous)).\n\nThis directive replaces the current subsection with `` name ``. The current section is not changed. The replaced subsection is put onto the section stack in place of the then current top of stack subsection.",
+    "name": ".subsection",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/SubSection.html#SubSection",
+    "usage": ".subsection *name*"
+  },
+  ".symver": {
+    "type": "directive",
+    "description": "Use the `` .symver `` directive to bind symbols to specific version nodes within a source file. This is only supported on ELF platforms, and is typically used when assembling files to be linked into a shared library. There are cases where it may make sense to use this in objects to be bound into an application itself so as to override a versioned symbol from a shared library.\n\nFor ELF targets, the `` .symver `` directive can be used like this:\n\n<pre>.symver *name*, *name2@nodename* </pre>\n\nIf the symbol *name* is defined within the file being assembled, the `` .symver `` directive effectively creates a symbol alias with the name *name2@nodename*, and in fact the main reason that we just don't try and create a regular alias is that the *@* character isn't permitted in symbol names. The *name2* part of the name is the actual name of the symbol by which it will be externally referenced. The name *name* itself is merely a name of convenience that is used so that it is possible to have definitions for multiple versions of a function within a single source file, and so that the compiler can unambiguously know which version of a function is being mentioned. The *nodename* portion of the alias should be the name of a node specified in the version script supplied to the linker when building a shared library. If you are attempting to override a versioned symbol from a shared library, then *nodename* should correspond to the nodename of the symbol you are trying to override.\n\nIf the symbol *name* is not defined within the file being assembled, all references to *name* will be changed to *name2@nodename*. If no reference to *name* is made, *name2@nodename* will be removed from the symbol table.\n\nAnother usage of the `` .symver `` directive is:\n\n<pre>.symver *name*, *name2@@nodename* </pre>\n\nIn this case, the symbol *name* must exist and be defined within the file being assembled. It is similar to *name2@nodename*. The difference is *name2@@nodename* will also be used to resolve references to *name2* by the linker.\n\nThe third usage of the `` .symver `` directive is:\n\n<pre>.symver *name*, *name2@@@nodename* </pre>\n\nWhen *name* is not defined within the file being assembled, it is treated as *name2@nodename*. When *name* is defined within the file being assembled, the symbol name, *name*, will be changed to *name2@@nodename*.",
+    "name": ".symver",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Symver.html#Symver",
+    "usage": ".symver"
+  },
+  ".tag": {
+    "type": "directive",
+    "description": "This directive is generated by compilers to include auxiliary debugging information in the symbol table. It is only permitted inside `` .def ``/`` .endef `` pairs. Tags are used to link structure definitions in the symbol table with instances of those structures.\n\n`` .tag `` is only used when generating COFF format output; when `` as `` is generating `` b.out ``, it accepts this directive but ignores it.",
+    "name": ".tag",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Tag.html#Tag",
+    "usage": ".tag *structname*"
+  },
+  ".text": {
+    "type": "directive",
+    "description": "Tells `` as `` to assemble the following statements onto the end of the text subsection numbered *subsection*, which is an absolute expression. If *subsection* is omitted, subsection number zero is used.",
+    "name": ".text",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Text.html#Text",
+    "usage": ".text *subsection*"
+  },
+  ".title": {
+    "type": "directive",
+    "description": "Use *heading* as the title (second line, immediately after the source file name and pagenumber) when generating assembly listings.\n\nThis directive affects subsequent pages, as well as the current page if it appears within ten lines of the top of a page.",
+    "name": ".title",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Title.html#Title",
+    "usage": ".title \"*heading*\""
+  },
+  ".type": {
+    "type": "directive",
+    "description": "This directive, permitted only within `` .def ``/`` .endef `` pairs, records the integer *int* as the type attribute of a symbol table entry.\n\n`` .type `` is associated only with COFF format output; when `` as `` is configured for `` b.out `` output, it accepts this directive but ignores it.\n\n### <code>.type *name* , *type description*</code> (ELF version)\n\n\n\nThis directive is used to set the type of symbol *name* to be either a function symbol or an object symbol. There are five different syntaxes supported for the *type description* field, in order to provide compatibility with various other assemblers. The syntaxes supported are:\n\n<pre>  .type &lt;name&gt;,#function   .type &lt;name&gt;,#object    .type &lt;name&gt;,@function   .type &lt;name&gt;,@object    .type &lt;name&gt;,%function   .type &lt;name&gt;,%object    .type &lt;name&gt;,\"function\"   .type &lt;name&gt;,\"object\"    .type &lt;name&gt; STT_FUNCTION   .type &lt;name&gt; STT_OBJECT </pre>",
+    "name": ".type",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Type.html#Type",
+    "usage": ".type *int* (COFF version)"
+  },
+  ".uleb128": {
+    "type": "directive",
+    "description": "*uleb128* stands for \"unsigned little endian base 128.\" This is a compact, variable length representation of numbers used by the DWARF symbolic debugging format. See [`` .sleb128 ``](https://www.sourceware.org/binutils/docs-2.12/as.info/Sleb128.html#Sleb128).",
+    "name": ".uleb128",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Uleb128.html#Uleb128",
+    "usage": ".uleb128 *expressions*"
+  },
+  ".val": {
+    "type": "directive",
+    "description": "This directive, permitted only within `` .def ``/`` .endef `` pairs, records the address *addr* as the value attribute of a symbol table entry.\n\n`` .val `` is used only for COFF output; when `` as `` is configured for `` b.out ``, it accepts this directive but ignores it.",
+    "name": ".val",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Val.html#Val",
+    "usage": ".val *addr*"
+  },
+  ".version": {
+    "type": "directive",
+    "description": "This directive creates a `` .note `` section and places into it an ELF formatted note of type NT\\_VERSION. The note's name is set to `` string ``.",
+    "name": ".version",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Version.html#Version",
+    "usage": ".version \"*string*\""
+  },
+  ".vtable_entry": {
+    "type": "directive",
+    "description": "This directive finds or creates a symbol `` table `` and creates a `` VTABLE_ENTRY `` relocation for it with an addend of `` offset ``.",
+    "name": ".vtable_entry",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/VTableEntry.html#VTableEntry",
+    "usage": ".vtable_entry *table*, *offset*"
+  },
+  ".vtable_inherit": {
+    "type": "directive",
+    "description": "This directive finds the symbol `` child `` and finds or creates the symbol `` parent `` and then creates a `` VTABLE_INHERIT `` relocation for the parent whose addend is the value of the child symbol. As a special case the parent name of `` 0 `` is treated as refering the `` *ABS* `` section.",
+    "name": ".vtable_inherit",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/VTableInherit.html#VTableInherit",
+    "usage": ".vtable_inherit *child*, *parent*"
+  },
+  ".weak": {
+    "type": "directive",
+    "description": "This directive sets the weak attribute on the comma separated list of symbol `` names ``. If the symbols do not already exist, they will be created.",
+    "name": ".weak",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Weak.html#Weak",
+    "usage": ".weak *names*"
+  },
+  ".word": {
+    "type": "directive",
+    "description": "This directive expects zero or more *expressions*, of any section, separated by commas.\n\nThe size of the number emitted, and its byte order, depend on what target computer the assembly is for. >   _Warning: Special Treatment to support Compilers_\n\nMachines with a 32-bit address space, but that do less than 32-bit addressing, require the following special treatment. If the machine of interest to you does 32-bit addressing (or doesn't require it; see [Machine Dependencies](https://www.sourceware.org/binutils/docs-2.12/as.info/Machine-Dependencies.html#Machine%20Dependencies)), you can ignore this issue.\n\nIn order to assemble compiler output into something that works, `` as `` occasionally does strange things to `` .word `` directives. Directives of the form `` .word sym1-sym2 `` are often emitted by compilers as part of jump tables. Therefore, when `` as `` assembles a directive of the form `` .word sym1-sym2 ``, and the difference between `` sym1 `` and `` sym2 `` does not fit in 16 bits, `` as `` creates a <dfn>secondary jump table</dfn>, immediately before the next label. This secondary jump table is preceded by a short-jump to the first byte after the secondary table. This short-jump prevents the flow of control from accidentally falling into the new table. Inside the table is a long-jump to `` sym2 ``. The original `` .word `` contains `` sym1 `` minus the address of the long-jump to `` sym2 ``.\n\nIf there were several occurrences of `` .word sym1-sym2 `` before the secondary jump table, all of them are adjusted. If there was a `` .word sym3-sym4 ``, that also did not fit in sixteen bits, a long-jump to `` sym4 `` is included in the secondary jump table, and the `` .word `` directives are adjusted to contain `` sym3 `` minus the address of the long-jump to `` sym4 ``; and so on, for as many entries in the original jump table as necessary.",
+    "name": ".word",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Word.html#Word",
+    "usage": ".word *expressions*"
+  },
+  "Deprecated": {
+    "type": "directive",
+    "description": "One day these directives won't work. They are included for compatibility with older assemblers.\n\n<dl> <dt><tt>.abort</tt> <br/><dt><tt>.line</tt> <dd></dd></dt></dt></dl>",
+    "name": "Deprecated",
+    "source": "https://www.sourceware.org/binutils/docs-2.12/as.info/Deprecated.html#Deprecated",
+    "usage": "Deprecated Directives"
+  },
+  "ldb": {
+    "type": "alias",
+    "alias": "ldb / ldbio"
+  },
+  "ldbio": {
+    "type": "alias",
+    "alias": "ldb / ldbio"
+  },
+  "ldbu": {
+    "type": "alias",
+    "alias": "ldbu / ldbuio"
+  },
+  "ldbuio": {
+    "type": "alias",
+    "alias": "ldbu / ldbuio"
+  },
+  "ldh": {
+    "type": "alias",
+    "alias": "ldh / ldhio"
+  },
+  "ldhio": {
+    "type": "alias",
+    "alias": "ldh / ldhio"
+  },
+  "ldhu": {
+    "type": "alias",
+    "alias": "ldhu / ldhuio"
+  },
+  "ldhuio": {
+    "type": "alias",
+    "alias": "ldhu / ldhuio"
+  },
+  "ldw": {
+    "type": "alias",
+    "alias": "ldw / ldwio"
+  },
+  "ldwio": {
+    "type": "alias",
+    "alias": "ldw / ldwio"
+  },
+  "sth": {
+    "type": "alias",
+    "alias": "sth / sthio"
+  },
+  "sthio": {
+    "type": "alias",
+    "alias": "sth / sthio"
+  },
+  "stw": {
+    "type": "alias",
+    "alias": "stw / stwio"
+  },
+  "stwio": {
+    "type": "alias",
+    "alias": "stw / stwio"
+  },
+  "r0": {
+    "type": "alias",
+    "alias": "r0 / zero"
+  },
+  "zero": {
+    "type": "alias",
+    "alias": "r0 / zero"
+  },
+  "r1": {
+    "type": "alias",
+    "alias": "r1 / at"
+  },
+  "at": {
+    "type": "alias",
+    "alias": "r1 / at"
+  },
+  "r24": {
+    "type": "alias",
+    "alias": "r24 / et"
+  },
+  "et": {
+    "type": "alias",
+    "alias": "r24 / et"
+  },
+  "r25": {
+    "type": "alias",
+    "alias": "r25 / bt"
+  },
+  "bt": {
+    "type": "alias",
+    "alias": "r25 / bt"
+  },
+  "r26": {
+    "type": "alias",
+    "alias": "r26 / gp"
+  },
+  "gp": {
+    "type": "alias",
+    "alias": "r26 / gp"
+  },
+  "r27": {
+    "type": "alias",
+    "alias": "r27 / sp"
+  },
+  "sp": {
+    "type": "alias",
+    "alias": "r27 / sp"
+  },
+  "r28": {
+    "type": "alias",
+    "alias": "r28 / fp"
+  },
+  "fp": {
+    "type": "alias",
+    "alias": "r28 / fp"
+  },
+  "r29": {
+    "type": "alias",
+    "alias": "r29 / ea"
+  },
+  "ea": {
+    "type": "alias",
+    "alias": "r29 / ea"
+  },
+  "r30": {
+    "type": "alias",
+    "alias": "r30 / sstatus"
+  },
+  "sstatus": {
+    "type": "alias",
+    "alias": "r30 / sstatus"
+  },
+  "r31": {
+    "type": "alias",
+    "alias": "r31 / ra"
+  },
+  "ra": {
+    "type": "alias",
+    "alias": "r31 / ra"
+  }
+}

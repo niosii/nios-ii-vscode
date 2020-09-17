@@ -1,0 +1,27 @@
+name: Package
+
+on:
+  push:
+    branches: "**"
+  pull_request:
+    branches: [master]
+
+jobs:
+  package:
+    name: Package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - name: Install NPM packages
+        run: |
+          npm install
+          npm install -g vsce
+      - run: vsce package
+      - run: mkdir nios-ii && cp *.vsix nios-ii
+      - uses: actions/upload-artifact@v1
+        with:
+          name: nios-ii
+          path: nios-ii

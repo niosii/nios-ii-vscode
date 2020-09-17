@@ -17,7 +17,7 @@ _start:	                          # Mainroutine
   */
 InfiniteLoop:	                    # Subroutine
     br		InfiniteLoop
-    
+
 _end:
     br		_end
 
@@ -31,5 +31,5 @@ EMPTY:          .skip
 /*
 Some Data
 */
-.end 
+.end
 # End of the Program
