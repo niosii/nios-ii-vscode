@@ -4,7 +4,7 @@
   "description": "Nios II Language Support for Nios II Assembly Language Programming",
   "publisher": "niosii",
   "version": "0.0.15",
-  "repository": "https://github.com/estKey/nios-ii",
+  "repository": "https://github.com/niosii/nios-ii-vscode",
   "engines": {
     "vscode": "^1.36.0"
   },
